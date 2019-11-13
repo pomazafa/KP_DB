@@ -45,7 +45,7 @@ namespace MyProject
             "  (SERVER = DEDICATED)" +
             "  (SERVICE_NAME = orcl)" +
             ")" +
-          ");User Id = system;password=pomazafaP1";
+          ");User Id = kuser;password=qwe123qwe";
                         OracleConnection oracleConnection = new OracleConnection();
                         oracleConnection.ConnectionString = connectionString;
 
@@ -53,9 +53,7 @@ namespace MyProject
 
                         OracleCommand cmd = new OracleCommand();
 
-                        cmd.CommandText = "insert into Client(login, password_hash, lastname, firstname, bday) values ('" + Login.Text + "', '" + SecurePasswordHasher.Hash(Password.Text) + "','" + Surname.Text + "','" + FirstName.Text + "', TO_DATE('" + DateBlock.Text + "', 'YYYY-MM-DD'))";
-
-                        MessageBox.Show(cmd.CommandText);
+                        cmd.CommandText = "insert into system.Client(login, password_hash, lastname, firstname, bday) values ('" + Login.Text + "', '" + SecurePasswordHasher.Hash(Password.Text) + "','" + Surname.Text + "','" + FirstName.Text + "', TO_DATE('" + DateBlock.Text + "', 'DD-MM-YYYY'))";
 
                         cmd.Connection = oracleConnection;
 
@@ -63,12 +61,17 @@ namespace MyProject
 
                         int c = cmd.ExecuteNonQuery();
 
+
+
                         if (c != 0)
                         {
+                            AddAdditionalFields(oracleConnection);
                             MessageBox.Show("Success");
                         }
 
                         oracleConnection.Close();
+
+                        Close();
                     }
                     catch (Exception ex)
                     {
@@ -85,6 +88,51 @@ namespace MyProject
                 MessageBox.Show("Fill in the fields! Required fields are: Surname, Name, Day of Birth, Login, Password, Repeat Password", "Warning");
             }
 
+            
+        }
+
+        private bool AddAdditionalFields(OracleConnection con)
+        {
+            try
+            {
+                OracleCommand cmd = new OracleCommand();
+
+                string command = "update system.client set ";
+                bool isO = false;
+
+                if (Telephone.Text != "")
+                {
+                    command += "telephone = '" + Telephone.Text + "'";
+                    isO = true;
+                }
+
+                if (FatherName.Text != "")
+                {
+                    if (isO)
+                        command += ',';
+
+                    command += "patronimic = '" + FatherName.Text + "'";
+                    isO = true;
+                }
+                if (isO)
+                {
+                    command += " where login = '" + Login.Text + "'";
+
+                    cmd.CommandText = command;
+
+                    cmd.Connection = con;
+
+                    cmd.CommandType = System.Data.CommandType.Text;
+
+                    cmd.ExecuteNonQuery();
+                }
+                return true;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return false;
+            }
         }
         private bool CheckFields()
         {

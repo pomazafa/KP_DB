@@ -1,0 +1,69 @@
+﻿<Window x:Class="MyProject.SearchTrainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MyProject"
+        mc:Ignorable="d"
+        Title="SearchTrainWindow" Style="{StaticResource MyWindow}" 
+        MinHeight="400" MinWidth="800">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource brushWatermarkBackground}" Style="{StaticResource EntryFieldStyle}" >
+            <TextBlock Margin="5,2" Text="Дата (дд.мм.гггг)" Foreground="{StaticResource brushWatermarkForeground}"
+                       Visibility="{Binding ElementName=Date1, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <TextBox Name="Date1" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}" />
+        </Grid>
+        <Grid Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource brushWatermarkBackground}" Style="{StaticResource EntryFieldStyle}" >
+            <TextBlock Margin="5,2" Text="Станция отбытия" Foreground="{StaticResource brushWatermarkForeground}"
+                       Visibility="{Binding ElementName=Station1, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <TextBox Name="Station1" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}" />
+        </Grid>
+        <Grid Grid.Column="0" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource brushWatermarkBackground}" Style="{StaticResource EntryFieldStyle}" >
+            <TextBlock Margin="5,2" Text="Станция прибытия" Foreground="{StaticResource brushWatermarkForeground}"
+                       Visibility="{Binding ElementName=Station2, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <TextBox Name="Station2" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}" />
+        </Grid>
+
+        <Button Content="Все станции" Name="View_Stations"
+                Style="{DynamicResource MyButton}"
+                Template="{DynamicResource MyButtonTemplate}"
+                Grid.Column="0" Grid.Row="3"></Button>
+
+        <Button Content="Поиск" Name="Search"
+                Style="{DynamicResource MyButton}"
+                Template="{DynamicResource MyButtonTemplate}"
+                Grid.Column="0" Grid.Row="4"></Button>
+
+        <DataGrid Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="4" 
+                  Margin="10" Name="ResSet"
+                  CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Фамилия" Binding="{Binding SURNAME}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Имя" Binding="{Binding FIRSTNAME}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Отчество" Binding="{Binding FATHERSNAME}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Дата рождения" Binding="{Binding BDAY, StringFormat=dd.MM.yyyy}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Пол" Binding="{Binding GENDER}" Width="auto"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <!--<Button Content="Изменить информацию" Name="ChangeInfo" Click="ChangeInfo_Click"
+                Style="{DynamicResource MyButton}"
+                Template="{DynamicResource MyButtonTemplate}"
+                Grid.Column="1" Grid.Row="4"></Button>-->
+        <Button Content="Выбрать" Name="Choose"
+                Style="{DynamicResource MyButton}"
+                Template="{DynamicResource MyButtonTemplate}"
+                Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2"></Button>
+    </Grid>
+</Window>

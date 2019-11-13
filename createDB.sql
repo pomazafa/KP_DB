@@ -142,4 +142,39 @@ drop table Train;
 drop table client;
 
 
-select password_hash, client_id from Client;
+select * from Client;
+
+alter session set "_ORACLE_SCRIPT"=true;
+
+CREATE USER kuser IDENTIFIED BY qwe123qwe;
+
+GRANT CONNECT TO kuser;
+
+GRANT SELECT ANY TABLE TO kuser;
+
+GRANT INSERT ANY TABLE TO kuser;
+
+GRANT UPDATE on client TO kuser;
+
+grant execute on system.getUserByLogin to kuser;
+
+CREATE OR REPLACE PROCEDURE getUserByLogin(
+       p__userlogin IN system.client.login%TYPE,
+       o__user_id OUT system.client.client_id%TYPE,
+       o__user_passwordhash OUT system.client.password_hash%TYPE,
+       o__user_lastname OUT system.client.lastname%TYPE,
+       o__user_firstname OUT system.client.firstname%TYPE,
+       o__user_patronimic OUT system.client.patronimic%TYPE,
+       o__user_telephone OUT system.client.telephone%TYPE,
+       o__bday OUT system.client. bday%TYPE
+       )
+IS
+BEGIN
+  SELECT client_id, password_hash , lastname, firstname, patronimic, telephone, bday
+  INTO o__user_id, o__user_passwordhash, o__user_lastname, o__user_firstname,  o__user_patronimic, o__user_telephone , o__bday
+  from  system.client WHERE login = p__userlogin;
+
+END;
+commit;
+--drop procedure getuserbylogin;
+exec getUserByLogin('Login');

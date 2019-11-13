@@ -18,3 +18,5 @@ D:\!S5\KP\MyProject\MyProject\obj\Debug\NewUserWindow.g.cs
 D:\!S5\KP\MyProject\MyProject\obj\Debug\NewUserWindow.baml
 D:\!S5\KP\MyProject\MyProject\bin\Debug\Oracle.DataAccess.dll
 D:\!S5\KP\MyProject\MyProject\obj\Debug\MyProject.csproj.CopyComplete
+D:\!S5\KP\MyProject\MyProject\obj\Debug\SearchTrainWindow.g.cs
+D:\!S5\KP\MyProject\MyProject\obj\Debug\SearchTrainWindow.baml
