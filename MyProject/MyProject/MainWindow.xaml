@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MyProject"
         mc:Ignorable="d"
-        Title="Enter" MinHeight="430" MinWidth="340"
+        Title="Enter" MinHeight="430" MinWidth="340" Loaded="Window_Loaded"
         Style="{StaticResource MyWindow}">
     <Grid Margin="40, 10">
         <Grid.RowDefinitions>
