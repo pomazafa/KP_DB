@@ -77,12 +77,26 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Address.cs" />
+    <Compile Include="ChooseStationWindow.xaml.cs">
+      <DependentUpon>ChooseStationWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Client.cs" />
     <Compile Include="SearchTrainWindow.xaml.cs">
       <DependentUpon>SearchTrainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="SecurePasswordHashing.cs" />
+    <Compile Include="Station.cs" />
     <Compile Include="Train.cs" />
+    <Compile Include="TrainsStationsWindow.xaml.cs">
+      <DependentUpon>TrainsStationsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TrainStop.cs" />
+    <Compile Include="Trip.cs" />
+    <Page Include="ChooseStationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -100,6 +114,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SearchTrainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TrainsStationsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

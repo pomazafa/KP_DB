@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:MyProject"
         mc:Ignorable="d"
         Title="SearchTrainWindow" Style="{StaticResource MyWindow}" 
-        MinHeight="400" MinWidth="800" Loaded="Window_Loaded">
+        MinHeight="400" MinWidth="800"  >
+    <!--Loaded="Window_Loaded"-->
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
@@ -16,51 +17,62 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="0.2*"></ColumnDefinition>
+            <ColumnDefinition Width="0.2*"></ColumnDefinition>
+            <ColumnDefinition Width="10"></ColumnDefinition>
+            <ColumnDefinition Width="0.6*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource brushWatermarkBackground}" Style="{StaticResource EntryFieldStyle}" >
+        <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource brushWatermarkBackground}" Style="{StaticResource EntryFieldStyle}" >
             <TextBlock Margin="5,2" Text="Date (dd.mm.yyyy)" Foreground="{StaticResource brushWatermarkForeground}"
                        Visibility="{Binding ElementName=Date1, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
-            <TextBox Name="Date1" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}" />
+            <TextBox Name="Date1" MaxLength="10" Background="Transparent" Foreground="{StaticResource brushForegroudTextfield}" BorderBrush="{StaticResource brushWatermarkBorder}" />
         </Grid>
         <Grid Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource brushWatermarkBackground}" Style="{StaticResource EntryFieldStyle}" >
             <TextBlock Margin="5,2" Text="Station 1" Foreground="{StaticResource brushWatermarkForeground}"
                        Visibility="{Binding ElementName=Station1, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
-            <TextBox Name="Station1" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}" />
+            <TextBox Name="Station1" Background="Transparent" Foreground="{StaticResource brushForegroudTextfield}" IsEnabled="False" BorderBrush="{StaticResource brushWatermarkBorder}" />
         </Grid>
+        <Button Content="Choose" Name="Choose_Station1" Click="Choose_Station_Click" 
+                Style="{DynamicResource MyButton}"
+                Grid.Column="1" Grid.Row="1"></Button>
         <Grid Grid.Column="0" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource brushWatermarkBackground}" Style="{StaticResource EntryFieldStyle}" >
             <TextBlock Margin="5,2" Text="Station 2" Foreground="{StaticResource brushWatermarkForeground}"
                        Visibility="{Binding ElementName=Station2, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
-            <TextBox Name="Station2" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}" />
+            <TextBox Name="Station2" Background="Transparent" IsEnabled="False" BorderBrush="{StaticResource brushWatermarkBorder}" />
         </Grid>
-
-        <Button Content="All Stations" Name="View_Stations"
+        <Button Content="Choose" Name="Choose_Station2" Click="Choose_Station_Click" 
                 Style="{DynamicResource MyButton}"
-                Template="{DynamicResource MyButtonTemplate}"
-                Grid.Column="0" Grid.Row="3"></Button>
-
-        <Button Content="Search" Name="Search"
+                Grid.Column="1" Grid.Row="2"></Button>
+        <Button Content="All Stations" Name="View_Stations" Click="View_Stations_Click"
                 Style="{DynamicResource MyButton}"
-                Template="{DynamicResource MyButtonTemplate}"
+                Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2"></Button>
+
+        <Button Content="Search" Name="Search" Grid.ColumnSpan="2" Click="Search_Click"
+                Style="{DynamicResource MyButton}"
                 Grid.Column="0" Grid.Row="4"></Button>
 
-        <DataGrid Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" 
-                  Margin="10" Name="ResSet" SelectionMode="Single" SelectionChanged="ResSet_SelectionChanged"
+        <DataGrid AlternationCount="2"  Grid.Row="0" Grid.Column="3" Grid.RowSpan="3" Style="{DynamicResource MyDataGrid}"
+                   Name="ResSet" SelectionMode="Single" SelectionChanged="ResSet_SelectionChanged"
                   CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" IsReadOnly="True">
+            <DataGrid.RowHeaderTemplate>
+                <DataTemplate>
+                    <ToggleButton x:Name="RowHeaderToggleButton"
+				Cursor="Hand" />
+                </DataTemplate>
+            </DataGrid.RowHeaderTemplate>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Train number" Binding="{Binding TRAINNUMBER}" Width="*"></DataGridTextColumn>
-                <DataGridTextColumn Header="Count of seats" Binding="{Binding COUNTSEATS}" Width="auto"></DataGridTextColumn>
-                <DataGridTextColumn Header="Cost per station" Binding="{Binding COSTPERSTATION}" Width="auto"></DataGridTextColumn>
+                <DataGridTextColumn Header="Train number" Binding="{Binding Train.TRAINNUMBER}" Width="auto"></DataGridTextColumn>
+                <DataGridTextColumn Header="Count of seats" Binding="{Binding Train.COUNTSEATS}" Width="auto"></DataGridTextColumn>
+                <DataGridTextColumn Header="Cost per station" Binding="{Binding Train.COSTPERSTATION}" Width="auto"></DataGridTextColumn>
+                <DataGridTextColumn Header="Start station" Binding="{Binding Station1.Name}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="End station" Binding="{Binding Station2.Name}" Width="*"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Train information" Name="Info" Click="Info_Click" IsEnabled="False"
+        <Button Content="Trip information" Name="Info" Click="Info_Click" IsEnabled="False"
                 Style="{DynamicResource MyButton}"
-                Template="{DynamicResource MyButtonTemplate}"
-                Grid.Column="1" Grid.Row="3"></Button>
-        <Button Content="Choose" Name="Choose"
+                Grid.Column="3" Grid.Row="3"></Button>
+        <Button Content="Choose" Name="Choose" IsEnabled="False"
                 Style="{DynamicResource MyButton}"
-                Template="{DynamicResource MyButtonTemplate}"
-                Grid.Column="1" Grid.Row="4"></Button>
+                Grid.Column="3" Grid.Row="4"></Button>
     </Grid>
 </Window>

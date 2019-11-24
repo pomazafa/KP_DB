@@ -19,3 +19,8 @@ D:\!S5\KP\MyProject\MyProject\obj\x64\Debug\MyProject.csproj.CopyComplete
 D:\!S5\KP\MyProject\MyProject\obj\x64\Debug\MyProject.exe
 D:\!S5\KP\MyProject\MyProject\obj\x64\Debug\MyProject.pdb
 D:\!S5\KP\MyProject\MyProject\bin\x64\Debug\MyProject.pdb
+D:\!S5\KP\MyProject\MyProject\obj\x64\Debug\MyProject.csprojAssemblyReference.cache
+D:\!S5\KP\MyProject\MyProject\obj\x64\Debug\ChooseStationWindow.g.cs
+D:\!S5\KP\MyProject\MyProject\obj\x64\Debug\ChooseStationWindow.baml
+D:\!S5\KP\MyProject\MyProject\obj\x64\Debug\TrainsStationsWindow.g.cs
+D:\!S5\KP\MyProject\MyProject\obj\x64\Debug\TrainsStationsWindow.baml

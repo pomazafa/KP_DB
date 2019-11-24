@@ -6,133 +6,197 @@
     <Application.Resources>
         <Style x:Key="MyWindow" TargetType="{x:Type Window}">
             <Setter Property="WindowState" Value="Maximized"></Setter>
-            <Setter Property="FontSize" Value="22"></Setter>
+            <Setter Property="FontSize" Value="24"></Setter>
             <!--<Setter Property="Background">
                 <Setter.Value>
                     <ImageBrush ImageSource="pictures/fon8.jpg" TileMode="None" />
                 </Setter.Value>
             </Setter>-->
-            <Setter Property="FontFamily" Value="Georgia"></Setter>
+            <Setter Property="FontFamily" Value="sans-serif"></Setter>
+            <Setter Property="Background" Value="#282E33"></Setter>
             <!--<Setter Property="Icon" Value="pictures/icon.png"></Setter>-->
         </Style>
 
-        <Style x:Key="styleCalendar" TargetType="{x:Type Calendar}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Calendar}">
-                        <Viewbox>
-                            <CalendarItem x:Name="PART_CalendarItem"
-                              Background="{TemplateBinding Background}"
-                              BorderBrush="{TemplateBinding BorderBrush}"
-                              BorderThickness="{TemplateBinding BorderThickness}"/>
-                        </Viewbox>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
+        <Style x:Key="MyLabel" TargetType="{x:Type Label}">
+            <Setter Property="Foreground" Value="#ffffff"></Setter>
+            <Setter Property="FontSize" Value="24"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
         </Style>
 
         <!--вотермарк-->
-        <SolidColorBrush x:Key="brushWatermarkBackground" Color="#d2d0f0"/>
-        <SolidColorBrush x:Key="brushWatermarkForeground" Color="#836dd6" />
+        <SolidColorBrush x:Key="brushWatermarkBackground" Color="#d0e0f0"/>
+        <SolidColorBrush x:Key="brushWatermarkForeground" Color="#6d6d6d" />
         <SolidColorBrush x:Key="brushWatermarkBorder" Color="Gray" />
 
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
+        <SolidColorBrush x:Key="brushForegroudTextfield" Color="#1b1b1b" />
+
         <Style x:Key="EntryFieldStyle" TargetType="Grid" >
             <Setter Property="HorizontalAlignment" Value="Stretch" />
             <Setter Property="Opacity" Value="0.8"></Setter>
-            <Setter Property="Margin" Value="10" />
+            <Setter Property="Margin" Value="20" />
             <Setter Property="VerticalAlignment" Value="Stretch" />
         </Style>
 
         <!-- вотермарк-->
 
         <Style x:Key="MyTextBox" TargetType="{x:Type TextBox}">
-            <Setter Property="Background" Value="#d2d0f0"></Setter>
-            <Setter Property="Margin" Value="0, 10"></Setter>
+            <Setter Property="Foreground" Value="#1b1b1b"></Setter>
+            <Setter Property="Background" Value="#d0e0f0"></Setter>
             <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
             <Setter Property="FontSize" Value="28"></Setter>
             <Setter Property="VerticalAlignment" Value="Stretch"></Setter>
             <Setter Property="Opacity" Value="0.8"></Setter>
-            <Setter Property="Margin" Value="10, 10"></Setter>
+            <Setter Property="Margin" Value="20"></Setter>
         </Style>
 
         <Style x:Key="MyButton" TargetType="{x:Type Button}">
-            <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
-            <Setter Property="VerticalAlignment" Value="Stretch"></Setter>
-            <Setter Property="Margin" Value="10, 10"></Setter>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Margin" Value="20"></Setter>
+            <Setter Property="Foreground" Value="White"></Setter>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
-                        <Grid>
-                            <!--<Rectangle RadiusY="23" RadiusX="23" Stroke="#bee0f1">
-                                <Rectangle.Fill>
-                                    <RadialGradientBrush>
-                                        <GradientStop Color="#FF5DB1DB" Offset="1"/>
-                                        <GradientStop Color="#FFF1F8FB"/>
-                                        <GradientStop Color="#FF4FAAD8" Offset="1"/>
-                                    </RadialGradientBrush>
-                                </Rectangle.Fill>
-                            </Rectangle>-->
-                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        <Grid x:Name="grid">
+                            <Border x:Name="border" CornerRadius="40">
+                                <Border.Background>
+                                    <SolidColorBrush Color="#0071e3"></SolidColorBrush>
+                                </Border.Background>
+                                <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center">
+                                </ContentPresenter>
+                            </Border>
+
                         </Grid>
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsFocused" Value="True"/>
-                            <Trigger Property="IsDefaulted" Value="True"/>
-                            <Trigger Property="IsMouseOver" Value="True"/>
-                            <Trigger Property="IsPressed" Value="True"/>
-                            <Trigger Property="IsEnabled" Value="False"/>
+                            <!--<Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" TargetName="border">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="#0077ED"></SolidColorBrush>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>-->
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" TargetName="grid" Value="0.25"/>
+                            </Trigger>
+
+                            <EventTrigger RoutedEvent="MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation From="#0071e3" To="#52b0ca" Duration="0:0:0.5" Storyboard.TargetName="border" Storyboard.TargetProperty="Background.Color"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation From="#52b0ca" To="#0071e3" Duration="0:0:0.5" Storyboard.TargetName="border" Storyboard.TargetProperty="Background.Color"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-
-
         </Style>
-        <ControlTemplate x:Key="MyButtonTemplate" TargetType="{x:Type Button}">
-            <Grid>
-                <Rectangle RadiusY="23" RadiusX="23" Stroke="#7b76d3" Opacity="1">
-                    <Rectangle.Fill>
-                        <RadialGradientBrush>
-                            <GradientStop Color="#deddf4" Offset="0"/>
-                            <GradientStop Color="#d2d0f0" Offset="0.2"/>
-                            <GradientStop Color="#c6c4eb" Offset="0.4"/>
-                            <GradientStop Color="#b9b7e7" Offset="0.6"/>
-                            <GradientStop Color="#adaae3" Offset="0.8"/>
-                            <GradientStop Color="#a19ddf" Offset="0.9"/>
-                            <GradientStop Color="#9490db" Offset="1"/>
-                        </RadialGradientBrush>
-                    </Rectangle.Fill>
-                </Rectangle>
-                <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-            </Grid>
-            <ControlTemplate.Triggers>
-                <Trigger Property="IsFocused" Value="True"/>
-                <Trigger Property="IsDefaulted" Value="True"/>
-                <Trigger Property="IsMouseOver" Value="True"></Trigger>
-                <Trigger Property="IsPressed" Value="True"/>
-                <Trigger Property="IsEnabled" Value="False"/>
 
-                <EventTrigger RoutedEvent="Mouse.MouseEnter">
-                    <EventTrigger.Actions>
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <DoubleAnimation Duration="0:0:0.3" Storyboard.TargetProperty="Opacity" To="0.8" />
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger.Actions>
-                </EventTrigger>
-                <!--Действие на событие MouseLeave-->
-                <EventTrigger RoutedEvent="Mouse.MouseLeave">
-                    <EventTrigger.Actions>
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <DoubleAnimation Duration="0:0:0.3" Storyboard.TargetProperty="Opacity" To="1" />
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger.Actions>
-                </EventTrigger>
-            </ControlTemplate.Triggers>
-        </ControlTemplate>
+        <Style x:Key="MyDataGrid" TargetType="{x:Type DataGrid}">
+            <Setter Property="Background" Value="#d0e0f0"></Setter>
+            <Setter Property="FontSize" Value="20"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+            <Setter Property="VerticalAlignment" Value="Stretch"></Setter>
+            <Setter Property="Margin" Value="20"></Setter>
+        </Style>
+
+        <Style TargetType="{x:Type DataGridCell}">
+            <Style.Triggers>
+                <Trigger Property="DataGridCell.IsSelected" Value="True">
+                    <Setter Property="Background" Value="#bee2ea" />
+                    <Setter Property="Foreground" Value="#1b1b1b" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="{x:Type DataGridColumnHeader}">
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Height" Value="35" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="SeparatorBrush" Value="Blue" />
+            <Setter Property="FontWeight" Value="Black" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
+                        <Grid>
+                            <Border x:Name="columnHeaderBorder"
+		BorderThickness="1"
+		Padding="3,0,3,0">
+                                <Border.BorderBrush>
+                                    <SolidColorBrush Color="Black"></SolidColorBrush>
+                                </Border.BorderBrush>
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                        <GradientStop Offset="0" Color="#408ca0" />
+                                        <GradientStop Offset="1" Color="#52b0ca" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+			     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+				SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+
+        <Style TargetType="{x:Type DataGridRow}">
+            <Setter Property="Background" Value="#e0eeff" />
+            <Setter Property="Validation.ErrorTemplate" Value="{x:Null}" />
+            <Setter Property="FontSize" Value="20"></Setter>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGridRow}">
+                        <Border x:Name="DGR_Border"
+			BorderBrush="{TemplateBinding BorderBrush}"
+			BorderThickness="{TemplateBinding BorderThickness}"
+		        SnapsToDevicePixels="True">
+                            <Border.Background>
+                                <SolidColorBrush Color="#e0eeff"></SolidColorBrush>
+                            </Border.Background>
+                            <SelectiveScrollingGrid>
+                                <SelectiveScrollingGrid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </SelectiveScrollingGrid.ColumnDefinitions>
+                                <SelectiveScrollingGrid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </SelectiveScrollingGrid.RowDefinitions>
+                                <DataGridCellsPresenter Grid.Column="1"
+			ItemsPanel="{TemplateBinding ItemsPanel}"
+			SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                <DataGridDetailsPresenter Grid.Row="1"
+			Grid.Column="1"
+			SelectiveScrollingGrid.SelectiveScrollingOrientation="{Binding 
+ AreRowDetailsFrozen,
+  ConverterParameter={x:Static SelectiveScrollingOrientation.Vertical},
+			  Converter={x:Static DataGrid.RowDetailsScrollingConverter},
+			  RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+			Visibility="{TemplateBinding DetailsVisibility}" />
+
+                            </SelectiveScrollingGrid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
     </Application.Resources>
 </Application>

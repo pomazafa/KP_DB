@@ -36,93 +36,98 @@ namespace MyProject
 
         private void Enter_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (Login.Text != "" && MyPassword.Password != "")
             {
-
-                
-
-                using (OracleCommand cmd = new OracleCommand("system.getUserByLogin", connection))
+                try
                 {
-                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
-                    OracleParameter param = new OracleParameter();
-                    param.ParameterName = "@p__userlogin";
-                    param.OracleDbType = OracleDbType.Char;
-                    param.Value = Login.Text;
-                    cmd.Parameters.Add(param);
-
-                    param = new OracleParameter();
-                    param.ParameterName = "@o__user_id";
-                    param.OracleDbType = OracleDbType.Int64;
-                    param.Direction = System.Data.ParameterDirection.Output;
-                    cmd.Parameters.Add(param);
-
-                    param = new OracleParameter();
-                    param.ParameterName = "@o__user_passwordhash";
-                    param.OracleDbType = OracleDbType.Char;
-                    param.Size = 100;
-                    param.Direction = System.Data.ParameterDirection.Output;
-                    cmd.Parameters.Add(param);
-
-                    param = new OracleParameter();
-                    param.ParameterName = "@o__user_lastname";
-                    param.OracleDbType = OracleDbType.Char;
-                    param.Size = 30;
-                    param.Direction = System.Data.ParameterDirection.Output;
-                    cmd.Parameters.Add(param);
-
-                    param = new OracleParameter();
-                    param.ParameterName = "@o__user_firstname";
-                    param.OracleDbType = OracleDbType.Char;
-                    param.Size = 30;
-                    param.Direction = System.Data.ParameterDirection.Output;
-                    cmd.Parameters.Add(param);
-
-                    param = new OracleParameter();
-                    param.ParameterName = "@o__user_patronimic";
-                    param.OracleDbType = OracleDbType.Char;
-                    param.Size = 30;
-                    param.Direction = System.Data.ParameterDirection.Output;
-                    cmd.Parameters.Add(param);
-
-                    param = new OracleParameter();
-                    param.ParameterName = "@o__user_telephone";
-                    param.OracleDbType = OracleDbType.Char;
-                    param.Size = 20;
-                    param.Direction = System.Data.ParameterDirection.Output;
-                    cmd.Parameters.Add(param);
-
-                    param = new OracleParameter();
-                    param.ParameterName = "@o__user_bday";
-                    param.OracleDbType = OracleDbType.Date;
-                    param.Size = 8;
-                    param.Direction = System.Data.ParameterDirection.Output;
-                    cmd.Parameters.Add(param);
-
-                    cmd.ExecuteNonQuery();
-                    //MessageBox.Show((cmd.Parameters["@o__user_lastname"].Value).ToString());
-
-                    Client cl = new Client(Int32.Parse(cmd.Parameters["@o__user_id"].Value.ToString()), Login.Text, cmd.Parameters["@o__user_lastname"].Value.ToString(), 
-                        cmd.Parameters["@o__user_firstname"].Value.ToString(),DateTime.Parse(cmd.Parameters["@o__user_bday"].Value.ToString()), 
-                        cmd.Parameters["@o__user_telephone"].Value.ToString(), cmd.Parameters["@o__user_patronimic"].Value.ToString());
-
-                    //MessageBox.Show(cl.ToString());
-                    if (SecurePasswordHasher.Verify(MyPassword.Password, cmd.Parameters["@o__user_passwordhash"].Value.ToString().Trim()))
+                    using (OracleCommand cmd = new OracleCommand("system.getUserByLogin", connection))
                     {
-                        MessageBox.Show("YES!");
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
-                        SearchTrainWindow wind = new SearchTrainWindow(connection);
+                        OracleParameter param = new OracleParameter();
+                        param.ParameterName = "@p__userlogin";
+                        param.OracleDbType = OracleDbType.Char;
+                        param.Value = Login.Text;
+                        cmd.Parameters.Add(param);
 
-                        wind.Show();
-                        Close();
+                        param = new OracleParameter();
+                        param.ParameterName = "@o__user_id";
+                        param.OracleDbType = OracleDbType.Int64;
+                        param.Direction = System.Data.ParameterDirection.Output;
+                        cmd.Parameters.Add(param);
+
+                        param = new OracleParameter();
+                        param.ParameterName = "@o__user_passwordhash";
+                        param.OracleDbType = OracleDbType.Char;
+                        param.Size = 100;
+                        param.Direction = System.Data.ParameterDirection.Output;
+                        cmd.Parameters.Add(param);
+
+                        param = new OracleParameter();
+                        param.ParameterName = "@o__user_lastname";
+                        param.OracleDbType = OracleDbType.Char;
+                        param.Size = 30;
+                        param.Direction = System.Data.ParameterDirection.Output;
+                        cmd.Parameters.Add(param);
+
+                        param = new OracleParameter();
+                        param.ParameterName = "@o__user_firstname";
+                        param.OracleDbType = OracleDbType.Char;
+                        param.Size = 30;
+                        param.Direction = System.Data.ParameterDirection.Output;
+                        cmd.Parameters.Add(param);
+
+                        param = new OracleParameter();
+                        param.ParameterName = "@o__user_patronimic";
+                        param.OracleDbType = OracleDbType.Char;
+                        param.Size = 30;
+                        param.Direction = System.Data.ParameterDirection.Output;
+                        cmd.Parameters.Add(param);
+
+                        param = new OracleParameter();
+                        param.ParameterName = "@o__user_telephone";
+                        param.OracleDbType = OracleDbType.Char;
+                        param.Size = 20;
+                        param.Direction = System.Data.ParameterDirection.Output;
+                        cmd.Parameters.Add(param);
+
+                        param = new OracleParameter();
+                        param.ParameterName = "@o__user_bday";
+                        param.OracleDbType = OracleDbType.Date;
+                        param.Size = 8;
+                        param.Direction = System.Data.ParameterDirection.Output;
+                        cmd.Parameters.Add(param);
+
+                        cmd.ExecuteNonQuery();
+                        //MessageBox.Show((cmd.Parameters["@o__user_lastname"].Value).ToString());
+
+                        Client cl = new Client(Int32.Parse(cmd.Parameters["@o__user_id"].Value.ToString()), Login.Text, cmd.Parameters["@o__user_lastname"].Value.ToString(),
+                            cmd.Parameters["@o__user_firstname"].Value.ToString(), DateTime.Parse(cmd.Parameters["@o__user_bday"].Value.ToString()),
+                            cmd.Parameters["@o__user_telephone"].Value.ToString(), cmd.Parameters["@o__user_patronimic"].Value.ToString());
+
+                        //MessageBox.Show(cl.ToString());
+                        if (SecurePasswordHasher.Verify(MyPassword.Password, cmd.Parameters["@o__user_passwordhash"].Value.ToString().Trim()))
+                        {
+                            //MessageBox.Show("YES!");
+
+                            SearchTrainWindow wind = new SearchTrainWindow(connection);
+
+                            wind.Show();
+                            Close();
+                        }
+                        else
+                            MessageBox.Show("Nope");
                     }
-                    else
-                        MessageBox.Show("Nope");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
                 }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Fill in the fields", "Warning");
             }
         }
 
@@ -134,7 +139,7 @@ namespace MyProject
                     "  (SERVER = DEDICATED)" +
                     "  (SERVICE_NAME = orcl)" +
                     ")" +
-                    ");User Id = kuser;password=qwe123qwe";
+                    ");User Id = c##kuser;password=pomazafaP_1";
             connection = new OracleConnection();
             connection.ConnectionString = connectionString;
 

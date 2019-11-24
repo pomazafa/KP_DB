@@ -17,29 +17,29 @@
             <RowDefinition Height="15"></RowDefinition>
         </Grid.RowDefinitions>
         <DockPanel  Grid.Row="1" LastChildFill="True">
-            <Label Content="Login:" FontSize="24" DockPanel.Dock="Top" HorizontalAlignment="Center"></Label>
+            <Label Content="Login:" DockPanel.Dock="Top" Style="{DynamicResource MyLabel}"></Label>
             <TextBox Style="{DynamicResource MyTextBox}" Name="Login"
                      DockPanel.Dock="Bottom"
                      MaxLength="30" FontSize="24" MaxWidth="400"
                      />
         </DockPanel>
         <DockPanel  Grid.Row="2" LastChildFill="True">
-            <Label HorizontalAlignment="Center" FontSize="24" Content="Password:" DockPanel.Dock="Top"></Label>
-            <PasswordBox HorizontalAlignment="Stretch" Opacity="0.8" Name="MyPassword"
-                     Background="#d2d0f0" Grid.Row="3" VerticalAlignment="Stretch" 
-                     PasswordChar="*" MaxLength="16" FontSize="24" Margin="10, 10" DockPanel.Dock="Bottom"
+            <Label Content="Password:" DockPanel.Dock="Top" Style="{DynamicResource MyLabel}"></Label>
+            <PasswordBox HorizontalAlignment="Stretch" Opacity="0.8" Name="MyPassword" 
+                     Background="#d0e0f0" Grid.Row="3" VerticalAlignment="Stretch" Foreground="#323232"
+                     PasswordChar="*" MaxLength="16" FontSize="24" Margin="20" DockPanel.Dock="Bottom"
                      MaxWidth="400"
                      />
         </DockPanel>
         <Button      MinWidth="70" Name="Enter" Click="Enter_Click"
                      Content="Enter"
                     Style="{DynamicResource MyButton}"
-                    Template="{DynamicResource MyButtonTemplate}" MaxWidth="400"
+                    MaxWidth="400"
                     Grid.Row="3"/>
         <Button Name="Registration" Click="Registration_Click"
                 Content="Registration" 
                     Style="{DynamicResource MyButton}"
-                    Template="{DynamicResource MyButtonTemplate}" MaxWidth="400"
+                    MaxWidth="400"
                     Grid.Row="4"/>
     </Grid>
 </Window>

@@ -20,3 +20,7 @@ D:\!S5\KP\MyProject\MyProject\obj\x64\Release\MyProject.csproj.CoreCompileInputs
 D:\!S5\KP\MyProject\MyProject\obj\x64\Release\MyProject.csproj.CopyComplete
 D:\!S5\KP\MyProject\MyProject\obj\x64\Release\MyProject.exe
 D:\!S5\KP\MyProject\MyProject\obj\x64\Release\MyProject.pdb
+D:\!S5\KP\MyProject\MyProject\obj\x64\Release\ChooseStationWindow.g.cs
+D:\!S5\KP\MyProject\MyProject\obj\x64\Release\ChooseStationWindow.baml
+D:\!S5\KP\MyProject\MyProject\obj\x64\Release\TrainsStationsWindow.g.cs
+D:\!S5\KP\MyProject\MyProject\obj\x64\Release\TrainsStationsWindow.baml
