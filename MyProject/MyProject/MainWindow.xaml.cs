@@ -1,19 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Oracle.DataAccess.Client;
+using System.Data;
 
 namespace MyProject
 {
@@ -30,7 +18,7 @@ namespace MyProject
 
         private void Registration_Click(object sender, RoutedEventArgs e)
         {
-            NewUserWindow wind = new NewUserWindow();
+            NewUserWindow wind = new NewUserWindow(connection);
             wind.ShowDialog();
         }
 
@@ -100,13 +88,11 @@ namespace MyProject
                         cmd.Parameters.Add(param);
 
                         cmd.ExecuteNonQuery();
-                        //MessageBox.Show((cmd.Parameters["@o__user_lastname"].Value).ToString());
 
                         Client cl = new Client(Int32.Parse(cmd.Parameters["@o__user_id"].Value.ToString()), Login.Text, cmd.Parameters["@o__user_lastname"].Value.ToString(),
                             cmd.Parameters["@o__user_firstname"].Value.ToString(), DateTime.Parse(cmd.Parameters["@o__user_bday"].Value.ToString()),
                             cmd.Parameters["@o__user_telephone"].Value.ToString(), cmd.Parameters["@o__user_patronimic"].Value.ToString());
 
-                        //MessageBox.Show(cl.ToString());
                         if (SecurePasswordHasher.Verify(MyPassword.Password, cmd.Parameters["@o__user_passwordhash"].Value.ToString().Trim()))
                         {
                             //MessageBox.Show("YES!");
@@ -120,6 +106,10 @@ namespace MyProject
                             MessageBox.Show("Nope");
                     }
                 }
+                //catch(OracleException ex)
+                //{
+                //    MessageBox.Show("There is no such user in database", "Warning");
+                //}
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
@@ -139,7 +129,7 @@ namespace MyProject
                     "  (SERVER = DEDICATED)" +
                     "  (SERVICE_NAME = orcl)" +
                     ")" +
-                    ");User Id = c##kuser;password=pomazafaP_1";
+                    ");User Id = c##admin_user;password=pomazafaP#1";
             connection = new OracleConnection();
             connection.ConnectionString = connectionString;
 

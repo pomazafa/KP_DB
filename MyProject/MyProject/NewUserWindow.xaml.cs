@@ -20,8 +20,10 @@ namespace MyProject
     /// </summary>
     public partial class NewUserWindow : Window
     {
-        public NewUserWindow()
+        OracleConnection connection;
+        public NewUserWindow(OracleConnection connection)
         {
+            this.connection = connection;
             InitializeComponent();
         }
 
@@ -39,23 +41,11 @@ namespace MyProject
                     try
                     {
 
-                        String connectionString = "Data Source = (DESCRIPTION = " +
-            "(ADDRESS = (PROTOCOL = TCP)(HOST = localhost)(PORT = 1521))" +
-            "(CONNECT_DATA = " +
-            "  (SERVER = DEDICATED)" +
-            "  (SERVICE_NAME = orcl)" +
-            ")" +
-          ");User Id = kuser;password=qwe123qwe";
-                        OracleConnection oracleConnection = new OracleConnection();
-                        oracleConnection.ConnectionString = connectionString;
-
-                        oracleConnection.Open();
-
                         OracleCommand cmd = new OracleCommand();
 
                         cmd.CommandText = "insert into system.Client(login, password_hash, lastname, firstname, bday) values ('" + Login.Text + "', '" + SecurePasswordHasher.Hash(Password.Text) + "','" + Surname.Text + "','" + FirstName.Text + "', TO_DATE('" + DateBlock.Text + "', 'DD-MM-YYYY'))";
 
-                        cmd.Connection = oracleConnection;
+                        cmd.Connection = connection;
 
                         cmd.CommandType = System.Data.CommandType.Text;
 
@@ -65,11 +55,9 @@ namespace MyProject
 
                         if (c != 0)
                         {
-                            AddAdditionalFields(oracleConnection);
+                            AddAdditionalFields(connection);
                             MessageBox.Show("Success");
                         }
-
-                        oracleConnection.Close();
 
                         Close();
                     }

@@ -113,15 +113,16 @@ namespace MyProject
 
         private void Search_Click(object sender, RoutedEventArgs e)
         {
-            if(DateTime.TryParse(Date1.Text, out dt))
+            if (DateTime.TryParse(Date1.Text, out dt))
             {
                 if (Date1.Text == "" || Station1.Text == "" || Station2.Text == "")
                     MessageBox.Show("Fill in the fields");
                 else
                 {
+
                     OracleCommand cmd = new OracleCommand();
 
-                    cmd.CommandText = "select * from system.Trip inner join system.train on system.Trip.train_id = system.Train.train_id inner join system.station on system.Trip.start_station_id = system.station.station_id inner join system.station on system.Trip.end_station_id = system.station.station_id WHERE EXISTS(SELECT * " +
+                    cmd.CommandText = "select distinct * from system.Trip inner join system.train on system.Trip.train_id = system.Train.train_id inner join system.station on system.Trip.start_station_id = system.station.station_id inner join system.station on system.Trip.end_station_id = system.station.station_id WHERE EXISTS(SELECT * " +
                      " FROM system.train_stop" +
                   " WHERE system.trip.trip_id = system.train_stop.trip_id and system.train_stop.station_id = " + stat1.Station_ID + ")" +
                   " and exists(SELECT *" +
@@ -144,14 +145,128 @@ namespace MyProject
                     {
                         while (dr.Read())
                         {
-                            Train t = new Train(dr.GetInt32(1), dr.GetString(5), dr.GetInt32(6), dr.GetFloat(7));
-                            Station st1 = new Station(dr.GetInt32(8), dr.GetString(9), new Address());
-                            Station st2 = new Station(dr.GetInt32(11), dr.GetString(12), new Address());
+                            int id = dr.GetInt32(0);
 
-                            Trip trip = new Trip(dr.GetInt32(0), st1, st2, t);
-                            ResSet.Items.Add(trip);
+                            cmd.CommandText = "select distinct t1.trip_id from system.train_stop t1 inner join system.train_stop t2 on " +
+                        "t1.trip_id = t2.trip_id where t1.station_id = " + stat1.Station_ID + " and t2.station_id = " + stat2.Station_ID +
+                        "  and t1.departure_time < t2.departure_time ";
+
+                            OracleDataReader dr2 = cmd.ExecuteReader();
+                            while (dr2.Read())
+                            {
+                                if (dr2.GetInt32(0).Equals(id))
+                                {
+                                    Station st1 = new Station(dr.GetInt32(8), dr.GetString(9), new Address());
+                                    Station st2 = new Station(dr.GetInt32(11), dr.GetString(12), new Address());
+                                    Train t = new Train(dr.GetInt32(1), dr.GetString(5), dr.GetInt32(6), dr.GetFloat(7));
+                                    Trip trip = new Trip(id, st1, st2, t);
+                                    ResSet.Items.Add(trip);
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (!ResSet.HasItems)
+                        {
+                            MessageBox.Show("Sorry. There is no results for your query :c");
                         }
                     }
+                    #region
+                    //try
+                    //{
+
+                    //    using (OracleCommand cmd = new OracleCommand("system.getTrip", connection))
+                    //    {
+                    //        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    //        OracleParameter param = new OracleParameter();
+                    //        param.ParameterName = "@in_st_name1";
+                    //        param.OracleDbType = OracleDbType.Char;
+                    //        param.Value = Station1.Text;
+                    //        cmd.Parameters.Add(param);
+
+                    //        param = new OracleParameter();
+                    //        param.ParameterName = "@in_st_name2";
+                    //        param.OracleDbType = OracleDbType.Char;
+                    //        param.Value = Station2.Text;
+                    //        cmd.Parameters.Add(param);
+
+                    //        param = new OracleParameter();
+                    //        param.ParameterName = "@out_trip_id";
+                    //        param.OracleDbType = OracleDbType.Int32;
+                    //        param.Direction = System.Data.ParameterDirection.Output;
+                    //        cmd.Parameters.Add(param);
+
+                    //        param = new OracleParameter();
+                    //        param.ParameterName = "@out_station_id1";
+                    //        param.OracleDbType = OracleDbType.Int32;
+                    //        param.Direction = System.Data.ParameterDirection.Output;
+                    //        cmd.Parameters.Add(param);
+
+                    //        param = new OracleParameter();
+                    //        param.ParameterName = "@out_station_name1";
+                    //        param.OracleDbType = OracleDbType.Varchar2;
+                    //        param.Size = 30;
+                    //        param.Direction = System.Data.ParameterDirection.Output;
+                    //        cmd.Parameters.Add(param);
+
+                    //        param = new OracleParameter();
+                    //        param.ParameterName = "@out_station_id2";
+                    //        param.OracleDbType = OracleDbType.Int32;
+                    //        param.Direction = System.Data.ParameterDirection.Output;
+                    //        cmd.Parameters.Add(param);
+
+                    //        param = new OracleParameter();
+                    //        param.ParameterName = "@out_station_name2";
+                    //        param.OracleDbType = OracleDbType.Varchar2;
+                    //        param.Size = 30;
+                    //        param.Direction = System.Data.ParameterDirection.Output;
+                    //        cmd.Parameters.Add(param);
+
+                    //        param = new OracleParameter();
+                    //        param.ParameterName = "@out_train_id";
+                    //        param.OracleDbType = OracleDbType.Int32;
+                    //        param.Direction = System.Data.ParameterDirection.Output;
+                    //        cmd.Parameters.Add(param);
+
+                    //        param = new OracleParameter();
+                    //        param.ParameterName = "@out_train_number";
+                    //        param.OracleDbType = OracleDbType.Varchar2;
+                    //        param.Size = 30;
+                    //        param.Direction = System.Data.ParameterDirection.Output;
+                    //        cmd.Parameters.Add(param);
+
+                    //        param = new OracleParameter();
+                    //        param.ParameterName = "@out_count_seats";
+                    //        param.OracleDbType = OracleDbType.Int32;
+                    //        param.Direction = System.Data.ParameterDirection.Output;
+                    //        cmd.Parameters.Add(param);
+
+                    //        param = new OracleParameter();
+                    //        param.ParameterName = "@out_cost_per_station";
+                    //        param.OracleDbType = OracleDbType.Decimal;
+                    //        param.Direction = System.Data.ParameterDirection.Output;
+                    //        cmd.Parameters.Add(param);
+
+                    //        OracleDataReader rdr = cmd.ExecuteReader();
+
+                    //        // get the country name from the data reader
+                    //        if (rdr.Read())
+                    //        {
+                    //            rdr.GetString(0);
+                    //        }
+
+                    //        //    Client cl = new Client(Int32.Parse(cmd.Parameters["@o__user_id"].Value.ToString()), Login.Text, cmd.Parameters["@o__user_lastname"].Value.ToString(),
+                    //        //        cmd.Parameters["@o__user_firstname"].Value.ToString(), DateTime.Parse(cmd.Parameters["@o__user_bday"].Value.ToString()),
+                    //        //        cmd.Parameters["@o__user_telephone"].Value.ToString(), cmd.Parameters["@o__user_patronimic"].Value.ToString());
+                    //        //}
+                    //    }
+                    //}
+                    //catch (Exception ex)
+                    //{
+                    //    MessageBox.Show(ex.Message);
+                    //}
+                    #endregion
                 }
             }
             else
@@ -159,6 +274,5 @@ namespace MyProject
                 MessageBox.Show("Invalid date format");
             }
         }
-
     }
 }
