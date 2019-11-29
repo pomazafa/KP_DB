@@ -24,16 +24,19 @@ namespace MyProject
         public Station stat1;
         public Station stat2;
         DateTime dt = new DateTime();
+        string date;
+        Client cl;
         public SearchTrainWindow()
         {
             InitializeComponent();
         }
 
-        public SearchTrainWindow(OracleConnection oConnection)
+        public SearchTrainWindow(OracleConnection oConnection, Client client)
         {
 
             InitializeComponent();
             connection = oConnection;
+            cl = client;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -94,7 +97,10 @@ namespace MyProject
 
         private void View_Stations_Click(object sender, RoutedEventArgs e)
         {
+            if(ResSet.SelectedItem != null)
+            {
 
+            }
         }
 
         private void Choose_Station_Click(object sender, RoutedEventArgs e)
@@ -115,19 +121,19 @@ namespace MyProject
         {
             if (DateTime.TryParse(Date1.Text, out dt))
             {
+                date = Date1.Text;
                 if (Date1.Text == "" || Station1.Text == "" || Station2.Text == "")
                     MessageBox.Show("Fill in the fields");
                 else
                 {
-
                     OracleCommand cmd = new OracleCommand();
 
-                    cmd.CommandText = "select distinct * from system.Trip inner join system.train on system.Trip.train_id = system.Train.train_id inner join system.station on system.Trip.start_station_id = system.station.station_id inner join system.station on system.Trip.end_station_id = system.station.station_id WHERE EXISTS(SELECT * " +
+                    cmd.CommandText = "select distinct * from system.Trip inner join system.train on system.Trip.train_id = system.Train.train_id inner join system.station on system.Trip.start_station_id = system.station.station_id inner join system.station on system.Trip.end_station_id = system.station.station_id WHERE  EXISTS(SELECT * " +
                      " FROM system.train_stop" +
-                  " WHERE system.trip.trip_id = system.train_stop.trip_id and system.train_stop.station_id = " + stat1.Station_ID + ")" +
+                  " WHERE system.trip.trip_id = system.train_stop.trip_id and system.train_stop.station_id = " + stat1.Station_ID + " and '" + date + "'= trim(TO_CHAR(arrival_time, 'dd-mm-yyyy'))) " +
                   " and exists(SELECT *" +
                      " FROM system.train_stop" +
-                  " WHERE system.trip.trip_id = system.train_stop.trip_id and system.train_stop.station_id = " + stat2.Station_ID + ")";
+                  " WHERE system.trip.trip_id = system.train_stop.trip_id and system.train_stop.station_id = " + stat2.Station_ID + " and '" + date + "'= trim(TO_CHAR(arrival_time, 'dd-mm-yyyy'))) ";
 
                     cmd.Connection = connection;
 
@@ -244,7 +250,7 @@ namespace MyProject
 
                     //        param = new OracleParameter();
                     //        param.ParameterName = "@out_cost_per_station";
-                    //        param.OracleDbType = OracleDbType.Decimal;
+                    //        param.OracleDbType = OracleDbType.Int32;
                     //        param.Direction = System.Data.ParameterDirection.Output;
                     //        cmd.Parameters.Add(param);
 
@@ -253,7 +259,7 @@ namespace MyProject
                     //        // get the country name from the data reader
                     //        if (rdr.Read())
                     //        {
-                    //            rdr.GetString(0);
+                    //            MessageBox.Show(rdr.GetString(2));
                     //        }
 
                     //        //    Client cl = new Client(Int32.Parse(cmd.Parameters["@o__user_id"].Value.ToString()), Login.Text, cmd.Parameters["@o__user_lastname"].Value.ToString(),
@@ -272,6 +278,24 @@ namespace MyProject
             else
             {
                 MessageBox.Show("Invalid date format");
+            }
+        }
+
+        private void Choose_Click(object sender, RoutedEventArgs e)
+        {
+            if (ResSet.SelectedItem != null)
+            {
+                OracleCommand cmd = new OracleCommand();
+
+                cmd.CommandText = "insert into system.ticket(date_of_trip, client_id, trip_id) values (TO_DATE('" + date + "', 'DD-MM-YYYY HH24:MI'), " + cl.Client_ID + ", " + ((Trip)ResSet.SelectedItem).Trip_ID + ")";
+
+                cmd.Connection = connection;
+
+                cmd.CommandType = System.Data.CommandType.Text;
+
+                int c = cmd.ExecuteNonQuery();
+
+                MessageBox.Show("Ticket is successfully booked", "Success");
             }
         }
     }

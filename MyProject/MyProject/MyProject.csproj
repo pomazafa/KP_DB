@@ -83,11 +83,16 @@
       <DependentUpon>ChooseStationWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Client.cs" />
+    <Compile Include="Employee.cs" />
+    <Compile Include="EmployeeWindow.xaml.cs">
+      <DependentUpon>EmployeeWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SearchTrainWindow.xaml.cs">
       <DependentUpon>SearchTrainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="SecurePasswordHashing.cs" />
     <Compile Include="Station.cs" />
+    <Compile Include="Ticket.cs" />
     <Compile Include="Train.cs" />
     <Compile Include="TrainsStationsWindow.xaml.cs">
       <DependentUpon>TrainsStationsWindow.xaml</DependentUpon>
@@ -95,6 +100,10 @@
     <Compile Include="TrainStop.cs" />
     <Compile Include="Trip.cs" />
     <Page Include="ChooseStationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EmployeeWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

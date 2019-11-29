@@ -12,18 +12,17 @@ CREATE TABLE Client
 
 insert into client(login, password_hash, lastname, firstname, patronimic, bday) values ('pomazafa', '$MYHASH$V1$1000$1s03xYaRhcDoXBOn/QRPuQWsILnfbkrBnYKh2eX4IRvaQJWp', 'Duben', 'Polina', 'Vasilievna', '12-05-1999');
 
-
 CREATE TABLE Train
 (
     train_id NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1),
     train_number varchar(30) not null unique,
     count_seats number not null,
-    cost_per_station decimal(7,2) not null,
+    cost_per_station number not null,
     CONSTRAINT train_pk PRIMARY KEY (train_id)
 );
 
-insert into train (train_number, count_seats, cost_per_station) values ('123', 32, 12.21);
-insert into train (train_number, count_seats, cost_per_station) values ('731DB32', 10, 6.07);
+insert into train (train_number, count_seats, cost_per_station) values ('123', 32, 12);
+insert into train (train_number, count_seats, cost_per_station) values ('731DB32', 10, 6);
 
 commit;
 create table Address
@@ -58,7 +57,7 @@ insert into Station (station_name, address_id) values ('Minsk West', 2);
 insert into Station (station_name, address_id) values ('Grodno Central', 3);
 --select * from address;
 select * from station;
-
+select * from train;
 create table Trip
 (
     trip_id NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1),
@@ -76,7 +75,7 @@ create table Trip
 
 --insert into trip(train_id, start_station_id, end_station_id) values (1, 1, 2);
 insert into trip(train_id, start_station_id, end_station_id) values (1, 1, 2);
-insert into trip(train_id, start_station_id, end_station_id) values (1, 2, 3);
+insert into trip(train_id, start_station_id, end_station_id) values (2, 2, 3);
 insert into trip(train_id, start_station_id, end_station_id) values (1, 2, 1);
 
 create table Train_stop
@@ -96,13 +95,13 @@ create table Train_stop
     constraint train_stop_pk PRIMARY KEY(train_stop_id)
 )
 select * from system.trip;
-insert into train_stop (arrival_time, departure_time, station_id, trip_id) values(TO_DATE('10-12-2019 15:45', 'DD-MM-YYYY HH24:MI'), TO_DATE('10-12-2019 15:54', 'DD-MM-YYYY HH24:MI'), 1, 5);
-insert into train_stop (arrival_time, departure_time, station_id, trip_id) values(TO_DATE('10-12-2019 15:03', 'DD-MM-YYYY HH24:MI'), TO_DATE('10-12-2019 15:09', 'DD-MM-YYYY HH24:MI'), 2, 5);
-insert into train_stop (arrival_time, departure_time, station_id, trip_id) values(TO_DATE('10-12-2019 12:01', 'DD-MM-YYYY HH24:MI'), TO_DATE('10-12-2019 12:05', 'DD-MM-YYYY HH24:MI'), 2, 4);
-insert into train_stop (arrival_time, departure_time, station_id, trip_id) values(TO_DATE('10-12-2019 12:15', 'DD-MM-YYYY HH24:MI'), TO_DATE('10-12-2019 12:21', 'DD-MM-YYYY HH24:MI'), 1, 4);
-insert into train_stop (arrival_time, departure_time, station_id, trip_id) values(TO_DATE('10-12-2019 16:14', 'DD-MM-YYYY HH24:MI'), TO_DATE('10-12-2019 16:45', 'DD-MM-YYYY HH24:MI'), 3, 4);
-insert into train_stop (arrival_time, departure_time, station_id, trip_id) values(TO_DATE('30-11-2019 10:57', 'DD-MM-YYYY HH24:MI'), TO_DATE('30-11-2019 11:00', 'DD-MM-YYYY HH24:MI'), 1, 6);
-insert into train_stop (arrival_time, departure_time, station_id, trip_id) values(TO_DATE('30-11-2019 10:02', 'DD-MM-YYYY HH24:MI'), TO_DATE('30-11-2019 10:05', 'DD-MM-YYYY HH24:MI'), 2, 6);
+insert into train_stop (arrival_time, departure_time, station_id, trip_id) values(TO_DATE('10-12-2019 15:03', 'DD-MM-YYYY HH24:MI'), TO_DATE('10-12-2019 15:09', 'DD-MM-YYYY HH24:MI'), 1, 1);
+insert into train_stop (arrival_time, departure_time, station_id, trip_id) values(TO_DATE('10-12-2019 15:45', 'DD-MM-YYYY HH24:MI'), TO_DATE('10-12-2019 15:54', 'DD-MM-YYYY HH24:MI'), 2, 1);
+insert into train_stop (arrival_time, departure_time, station_id, trip_id) values(TO_DATE('10-12-2019 12:01', 'DD-MM-YYYY HH24:MI'), TO_DATE('10-12-2019 12:05', 'DD-MM-YYYY HH24:MI'), 2, 2);
+insert into train_stop (arrival_time, departure_time, station_id, trip_id) values(TO_DATE('10-12-2019 12:15', 'DD-MM-YYYY HH24:MI'), TO_DATE('10-12-2019 12:21', 'DD-MM-YYYY HH24:MI'), 1, 2);
+insert into train_stop (arrival_time, departure_time, station_id, trip_id) values(TO_DATE('10-12-2019 16:14', 'DD-MM-YYYY HH24:MI'), TO_DATE('10-12-2019 16:45', 'DD-MM-YYYY HH24:MI'), 3, 2);
+insert into train_stop (arrival_time, departure_time, station_id, trip_id) values(TO_DATE('30-11-2019 10:57', 'DD-MM-YYYY HH24:MI'), TO_DATE('30-11-2019 11:00', 'DD-MM-YYYY HH24:MI'), 1, 3);
+insert into train_stop (arrival_time, departure_time, station_id, trip_id) values(TO_DATE('30-11-2019 10:02', 'DD-MM-YYYY HH24:MI'), TO_DATE('30-11-2019 10:05', 'DD-MM-YYYY HH24:MI'), 2, 3);
 
 select * from trip;
 drop table system.train_stop;
@@ -112,7 +111,7 @@ create table Ticket
 (
     ticket_id NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1),
     date_of_purchase date,
-    date_of_trip date,
+    date_of_trip date not null,
     client_id number not null,
     trip_id number not null,
     FOREIGN KEY (client_id)
@@ -124,7 +123,9 @@ create table Ticket
 drop table ticket;
 select * from system.Trip inner join system.Train on system.Trip.train_id = system.Train.train_id;
 --select * from client;
-insert into ticket(date_of_trip, client_id, trip_id) values (TO_DATE('30-11-2019 15:32', 'DD-MM-YYYY HH24:MI'), 6, 6);
+insert into ticket(date_of_trip, client_id, trip_id) values (TO_DATE('30-11-2019 15:32', 'DD-MM-YYYY HH24:MI'), 6, 3);
+
+select * from ticket;
 
 create table Card
 (
@@ -187,25 +188,46 @@ alter session set "_ORACLE_SCRIPT"=true;
 
 CREATE USER kuser IDENTIFIED BY qwe123qwe;
 
-GRANT CONNECT TO kuser;
-
 GRANT SELECT ANY TABLE TO c##admin_user;
 
 GRANT INSERT ANY TABLE TO c##admin_user;
 
 GRANT UPDATE on client TO c##admin_user;
 
-GRANT UPDATE on system.client TO c##admin_user;
-GRANT insert on system.client TO c##admin_user;
-grant select on system.address to c##admin_user;
-grant select on system.train_stop to c##admin_user;
-grant select on system.train to c##admin_user;
-grant select on system.trip to c##admin_user;
-grant select on system.station to c##admin_user;
-grant insert on system.ticket to c##admin_user;
+GRANT UPDATE on system.client TO DPVCORE;
+GRANT insert on system.client TO DPVCORE;
+GRANT insert on system.ticket TO DPVCORE;
+grant select on system.client to DPVCORE;
+grant select on system.address to DPVCORE;
+grant select on system.train_stop to DPVCORE;
+grant select on system.train to DPVCORE;
+grant select on system.trip to DPVCORE;
+grant select on system.station to DPVCORE;
+grant select on system.employee to DPVCORE;
+grant select on system.ticket to DPVCORE;
 
-grant execute on system.getUserByLogin to c##kuser;
-grant execute on system.getTrip to c##kuser;
+grant execute on system.getUserByLogin to DPVCORE;
+grant execute on system.getTrip to DPVCORE;
+grant execute on system.insertClient to DPVCORE;
+grant execute on system.getEmployeeByUserId to DPVCORE; 
+
+GRANT UPDATE on system.client TO kuser;
+GRANT insert on system.client TO kuser;
+grant select on system.client to kuser;
+grant select on system.address to kuser;
+grant select on system.train_stop to kuser;
+grant select on system.train to kuser;
+grant select on system.trip to kuser;
+grant select on system.station to kuser;
+grant select on system.employee to kuser;
+grant insert on system.ticket to kuser;
+
+grant execute on system.getUserByLogin to kuser;
+grant execute on system.getTrip to kuser;
+grant execute on system.insertClient to kuser;
+grant execute on system.getEmployeeByUserId to kuser; 
+
+select * from system.client;
 
 CREATE OR REPLACE PROCEDURE getUserByLogin(
        p__userlogin IN system.client.login%TYPE,
@@ -257,10 +279,54 @@ select trip_id, s1.station_id, s1.station_name, s2.station_id, s2.station_name, 
 END;
 
 
+CREATE OR REPLACE PROCEDURE getEmployeeByUserId(
+       in_user_id IN system.client.client_id%TYPE,
+       o_emp_id OUT system.employee.employee_id%TYPE,
+       o_card_id OUT system.employee.card_id%TYPE,
+       o_occupation_id OUT system.employee.occupation_id%TYPE,
+       o_is_admin OUT system.employee.is_admin%TYPE
+       )
+IS
+BEGIN
+  select employee_id, card_id, occupation_id, is_admin 
+  INTO o_emp_id, o_card_id, o_occupation_id, o_is_admin
+  from system.client c inner join system.employee e on c.client_id = e.client_id where c.client_id = in_user_id;
+END;
+
+CREATE OR REPLACE PROCEDURE insertClient(
+  --     in_user_id in system.client.client_id%TYPE,
+       in_userlogin IN system.client.login%TYPE,
+       in_user_passwordhash in system.client.password_hash%TYPE,
+       in_user_lastname in system.client.lastname%TYPE,
+       in_user_firstname in system.client.firstname%TYPE,
+       in_user_patronimic in system.client.patronimic%TYPE,
+       in_bday in system.client.bday%TYPE,
+       in_user_telephone in system.client.telephone%TYPE
+       )
+IS
+BEGIN
+insert into system.client(login, password_hash, lastname, firstname, patronimic, bday, telephone) values (in_userlogin, in_user_passwordhash, in_user_lastname, in_user_firstname, in_user_patronimic, to_date(in_bday,'DDMMYYYY'), in_user_telephone);
+COMMIT;
+END;
+
+--describe train;
 commit;
 --drop procedure gettrip;
 exec getUserByLogin('Login');
-exec getTrip('Minsk South', 'Minsk West');
+--declare
+--       o1 system.trip.trip_id%TYPE;
+--       o2 system.station.station_id%TYPE;
+--       o3 system.station.station_name%TYPE;
+--       o4 system.station.station_id%TYPE;
+--       o5 system.station.station_name%TYPE;
+--       o6 system.train.train_id%TYPE;
+--       o7 system.train.train_number%TYPE;
+--       o8 system.train.count_seats%TYPE;
+--       o9 system.train.cost_per_station%TYPE;
+--begin
+--  select getTrip('Minsk West', 'Minsk South') into o1, o2, o3, o4, o5, o6, o7, o8, o9 from dual;
+--  dbms_output.put_line(' '||o3);
+--end;
 
 SELECT *
    FROM system.trip
@@ -273,16 +339,18 @@ WHERE EXISTS (SELECT *
               
 select * from system.Trip inner join system.train on system.Trip.train_id = system.Train.train_id inner join system.station on system.Trip.start_station_id = system.station.station_id inner join system.station on system.Trip.end_station_id = system.station.station_id WHERE EXISTS(SELECT * 
                   FROM system.train_stop
-               WHERE system.trip.trip_id = system.train_stop.trip_id and system.train_stop.station_id = 1)
+               WHERE system.trip.trip_id = system.train_stop.trip_id and system.train_stop.station_id = 1 and '10-12-2019' = trim(TO_CHAR(arrival_time, 'dd-mm-yyyy')))
                and exists(SELECT *
                   FROM system.train_stop
-               WHERE system.trip.trip_id = system.train_stop.trip_id and system.train_stop.station_id = 2)  ;
+               WHERE system.trip.trip_id = system.train_stop.trip_id and system.train_stop.station_id = 2 and '10-12-2019' = trim(TO_CHAR(arrival_time, 'dd-mm-yyyy')));
 
 select * from system.trip;
 select * from system.train_stop t1 inner join system.train_stop t2 on t1.trip_id = t2.trip_id where t1.station_id = 1 and t2.station_id = 2 and t1.departure_time < t2.departure_time;           
                
 select * from system.train_stop where trip_id = 2;
 
+
+grant create user to DPVCORE;
 
 SELECT parameter,value
 FROM gv$OPTION
@@ -291,9 +359,11 @@ WHERE PARAMETER = 'Oracle Database Vault';
 
 select trim(TO_CHAR(arrival_time, 'dd.mm.yyyy')) from system.train_stop inner join system.station on system.station.station_id = system.train_stop.station_id;
 
+select ti.ticket_id, ti.date_of_trip, cl.client_id, tr.trip_id, tr.start_station_id, tr.end_station_id,  trn.cost_per_station, trn.train_id, trn.train_number, trn.count_seats, cl.lastname from system.ticket ti inner join system.Trip tr on ti.trip_id = tr.trip_id inner join system.train trn on tr.train_id = trn.train_id inner join system.client cl on ti.client_id = cl.client_id where ti.date_of_purchase is null;
 
 select * from system.train_stop inner join system.station on system.station.station_id = system.train_stop.station_id where '10-12-2019' = trim(TO_CHAR(arrival_time, 'dd-mm-yyyy')) and trip_id = 2;
 select * from system.train_stop inner join system.station on system.station.station_id = system.train_stop.station_id where '10-12-2019' = ltrim(TO_CHAR(arrival_time,'dd-mm-yyyy')) and trip_id = 23;
 
 select * from system.train_stop;
 select * from system.trip where trip_id = (select trip_id from system.train_stop where station_id = 1) intersect select * from system.trip where trip_id = (select trip_id from system.train_stop where station_id = 2) ;
+

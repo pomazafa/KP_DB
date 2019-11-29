@@ -8,6 +8,10 @@ namespace MyProject
 {
     public class Station
     {
+        public Station()
+        {
+
+        }
         public Station(int id, string name, Address adr)
         {
             Station_ID = id;

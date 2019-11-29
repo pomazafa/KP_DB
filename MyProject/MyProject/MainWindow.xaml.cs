@@ -95,21 +95,72 @@ namespace MyProject
 
                         if (SecurePasswordHasher.Verify(MyPassword.Password, cmd.Parameters["@o__user_passwordhash"].Value.ToString().Trim()))
                         {
-                            //MessageBox.Show("YES!");
+                            MessageBox.Show("YES!");
 
-                            SearchTrainWindow wind = new SearchTrainWindow(connection);
+                            using (OracleCommand cmd2 = new OracleCommand("system.getEmployeeByUserId", connection))
+                            {
+                                cmd2.CommandType = System.Data.CommandType.StoredProcedure;
 
-                            wind.Show();
-                            Close();
+                                OracleParameter param2 = new OracleParameter();
+                                param2.ParameterName = "@in_user_id";
+                                param2.OracleDbType = OracleDbType.Int32;
+                                param2.Value = cl.Client_ID;
+                                cmd2.Parameters.Add(param2);
+
+                                param2 = new OracleParameter();
+                                param2.ParameterName = "@o_emp_id";
+                                param2.OracleDbType = OracleDbType.Int32;
+                                param2.Direction = System.Data.ParameterDirection.Output;
+                                cmd2.Parameters.Add(param2);
+
+                                param2 = new OracleParameter();
+                                param2.ParameterName = "@o_card_id";
+                                param2.OracleDbType = OracleDbType.Int32;
+                                param2.Direction = System.Data.ParameterDirection.Output;
+                                cmd2.Parameters.Add(param2);
+
+                                param2 = new OracleParameter();
+                                param2.ParameterName = "@o_occupation_id";
+                                param2.OracleDbType = OracleDbType.Int32;
+                                param2.Direction = System.Data.ParameterDirection.Output;
+                                cmd2.Parameters.Add(param2);
+
+                                param2 = new OracleParameter();
+                                param2.ParameterName = "@o_is_admin";
+                                param2.OracleDbType = OracleDbType.Int32;
+                                param2.Direction = System.Data.ParameterDirection.Output;
+                                cmd2.Parameters.Add(param2);
+
+                                try
+                                {
+                                    cmd2.ExecuteNonQuery();
+
+                                    Employee emp = new Employee(Int32.Parse(cmd2.Parameters["@o_emp_id"].Value.ToString()), cl.Client_ID, Int32.Parse(cmd2.Parameters["@o_card_id"].Value.ToString()), Int32.Parse(cmd2.Parameters["@o_occupation_id"].Value.ToString()), Int32.Parse(cmd2.Parameters["@o_is_admin"].Value.ToString()));
+
+
+                                    // добавить разделение на админа и работника
+
+
+                                    EmployeeWindow wind = new EmployeeWindow(connection);
+
+                                    wind.Show();
+
+                                    Close();
+                                        
+                                }
+                                catch (OracleException ex)
+                                {
+                                    SearchTrainWindow wind = new SearchTrainWindow(connection, cl);
+
+                                    wind.Show();
+                                    Close();
+                                }
+                            }
                         }
                         else
                             MessageBox.Show("Nope");
                     }
                 }
-                //catch(OracleException ex)
-                //{
-                //    MessageBox.Show("There is no such user in database", "Warning");
-                //}
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
@@ -129,7 +180,7 @@ namespace MyProject
                     "  (SERVER = DEDICATED)" +
                     "  (SERVICE_NAME = orcl)" +
                     ")" +
-                    ");User Id = c##admin_user;password=pomazafaP#1";
+                    ");User Id = DPVCORE;password=pomazafaP1";
             connection = new OracleConnection();
             connection.ConnectionString = connectionString;
 

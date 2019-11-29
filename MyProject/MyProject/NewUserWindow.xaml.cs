@@ -40,7 +40,58 @@ namespace MyProject
                 {
                     try
                     {
+                        #region
+                        //    using (OracleCommand cmd = new OracleCommand("system.insertClient", connection))
+                        //    {
+                        //        cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
+                        //        OracleParameter param = new OracleParameter();
+                        //        param.ParameterName = "@in_user_passwordhash";
+                        //        param.OracleDbType = OracleDbType.Char;
+                        //        param.Value = SecurePasswordHasher.Hash(Password.Text);
+                        //        cmd.Parameters.Add(param);
+
+                        //        param = new OracleParameter();
+                        //        param.ParameterName = "@in_bday";
+                        //        param.OracleDbType = OracleDbType.Date;
+                        //        param.Value = DateBlock.Text;
+                        //        cmd.Parameters.Add(param);
+
+                        //        param = new OracleParameter();
+                        //        param.ParameterName = "@in_user_telephone";
+                        //        param.OracleDbType = OracleDbType.Char;
+                        //        param.Value = Telephone.Text;
+                        //        cmd.Parameters.Add(param);
+
+                        //        param = new OracleParameter();
+                        //        param.ParameterName = "@in_user_patronimic";
+                        //        param.OracleDbType = OracleDbType.Char;
+                        //        param.Value = FatherName.Text;
+                        //        cmd.Parameters.Add(param);
+
+                        //        param = new OracleParameter();
+                        //        param.ParameterName = "@in_user_firstname";
+                        //        param.OracleDbType = OracleDbType.Char;
+                        //        param.Value = FirstName.Text;
+                        //        cmd.Parameters.Add(param);
+
+                        //        param = new OracleParameter();
+                        //        param.ParameterName = "@in_user_lastname";
+                        //        param.OracleDbType = OracleDbType.Char;
+                        //        param.Value = Surname.Text;
+                        //        cmd.Parameters.Add(param);
+
+
+                        //        param = new OracleParameter();
+                        //        param.ParameterName = "@in_userlogin";
+                        //        param.OracleDbType = OracleDbType.Char;
+                        //        param.Value = Login.Text;
+                        //        cmd.Parameters.Add(param);
+
+                        //        cmd.ExecuteNonQuery();
+
+                        //    }
+                        #endregion
                         OracleCommand cmd = new OracleCommand();
 
                         cmd.CommandText = "insert into system.Client(login, password_hash, lastname, firstname, bday) values ('" + Login.Text + "', '" + SecurePasswordHasher.Hash(Password.Text) + "','" + Surname.Text + "','" + FirstName.Text + "', TO_DATE('" + DateBlock.Text + "', 'DD-MM-YYYY'))";
@@ -56,7 +107,7 @@ namespace MyProject
                         if (c != 0)
                         {
                             AddAdditionalFields(connection);
-                            MessageBox.Show("Success");
+                            //MessageBox.Show("Success");
                         }
 
                         Close();
