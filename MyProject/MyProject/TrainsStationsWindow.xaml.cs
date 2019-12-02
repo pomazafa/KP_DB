@@ -36,7 +36,6 @@ namespace MyProject
         {
             OracleCommand cmd = new OracleCommand();
 
-            //cmd.CommandText = "select * from system.train_stop inner join system.station on system.station.station_id = system.train_stop.station_id where trim(TO_CHAR(arrival_time, 'dd-mm-yyyy')) = '" + datetime.Date.ToString().Substring(0, 10).Trim() + "' and trip_id = " + ((Trip)window.ResSet.SelectedItem).Trip_ID;
             cmd.CommandText = "select * from system.train_stop inner join system.station on system.station.station_id = system.train_stop.station_id where trim(TO_CHAR(arrival_time, 'dd.mm.yyyy')) = '" + datetime.Date.ToString().Substring(0, 10) + "' and trip_id = " + ((Trip)window.ResSet.SelectedItem).Trip_ID + " order by departure_time";
 
             cmd.Connection = connection;
@@ -47,7 +46,7 @@ namespace MyProject
 
             if (!dr.HasRows)
             {
-                MessageBox.Show("Sorry. There is something wrong with database :c");
+                MessageBox.Show("Sorry. There is something wrong with database :c", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else
             {
@@ -62,6 +61,11 @@ namespace MyProject
         }
 
         private void Ok_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void Back_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }

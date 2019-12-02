@@ -1,0 +1,34 @@
+﻿<Window x:Class="MyProject.CreateTripTrainChoiceWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MyProject"
+        mc:Ignorable="d"
+        Title="CreateTripTrainChoice" MinHeight="430" MinWidth="340"
+        Style="{StaticResource MyWindow}">
+    <Grid Margin="40, 10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="15"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="15"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Button  MinWidth="70" Name="SelectExisting" Click="SelectExisting_Click"
+                     Content="Select existing train"
+                    Style="{DynamicResource MyButton}"
+                    MaxWidth="400"
+                    Grid.Row="1"/>
+        <Button Name="CreateNew" Click="CreateNew_Click"
+                Content="Create new train" 
+                    Style="{DynamicResource MyButton}"
+                    MaxWidth="400"
+                    Grid.Row="2"/>
+        <Button Name="Cancel" Click="Cancel_Click"
+                Content="Back" 
+                    Style="{DynamicResource MyButton}"
+                    MaxWidth="400"
+                    Grid.Row="3"/>
+    </Grid>
+</Window>

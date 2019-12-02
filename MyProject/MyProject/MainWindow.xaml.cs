@@ -95,7 +95,7 @@ namespace MyProject
 
                         if (SecurePasswordHasher.Verify(MyPassword.Password, cmd.Parameters["@o__user_passwordhash"].Value.ToString().Trim()))
                         {
-                            MessageBox.Show("YES!");
+                            //MessageBox.Show("YES!");
 
                             using (OracleCommand cmd2 = new OracleCommand("system.getEmployeeByUserId", connection))
                             {
@@ -137,13 +137,31 @@ namespace MyProject
 
                                     Employee emp = new Employee(Int32.Parse(cmd2.Parameters["@o_emp_id"].Value.ToString()), cl.Client_ID, Int32.Parse(cmd2.Parameters["@o_card_id"].Value.ToString()), Int32.Parse(cmd2.Parameters["@o_occupation_id"].Value.ToString()), Int32.Parse(cmd2.Parameters["@o_is_admin"].Value.ToString()));
 
+                                    String connectionAdminString = "Data Source = (DESCRIPTION = " +
+                                    "(ADDRESS = (PROTOCOL = TCP)(HOST = localhost)(PORT = 1521))" +
+                                    "(CONNECT_DATA = " +
+                                    "  (SERVER = DEDICATED)" +
+                                    "  (SERVICE_NAME = orcl)" +
+                                    ")" +
+                                    ");User Id = DPVCORE;password=pomazafaP1";
 
-                                    // добавить разделение на админа и работника
+                                    connection = new OracleConnection();
+                                    connection.ConnectionString = connectionAdminString;
 
+                                    connection.Open();
 
-                                    EmployeeWindow wind = new EmployeeWindow(connection);
+                                    if (emp.IsAdmin == 1)
+                                    {
+                                        AdminWindow wind = new AdminWindow(connection);
 
-                                    wind.Show();
+                                        wind.Show();
+                                    }
+                                    else
+                                    {
+                                        EmployeeWindow wind = new EmployeeWindow(connection, emp);
+
+                                        wind.Show();
+                                    }
 
                                     Close();
                                         
@@ -158,17 +176,21 @@ namespace MyProject
                             }
                         }
                         else
-                            MessageBox.Show("Nope");
+                            MessageBox.Show("Nope", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
+                }
+                catch (OracleException ex)
+                {
+                    MessageBox.Show("There is no such user", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             else
             {
-                MessageBox.Show("Fill in the fields", "Warning");
+                MessageBox.Show("Fill in the fields", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -180,7 +202,7 @@ namespace MyProject
                     "  (SERVER = DEDICATED)" +
                     "  (SERVICE_NAME = orcl)" +
                     ")" +
-                    ");User Id = DPVCORE;password=pomazafaP1";
+                    ");User Id = c##kuser;password=pomazafaP_1";
             connection = new OracleConnection();
             connection.ConnectionString = connectionString;
 

@@ -7,11 +7,17 @@ using System.Threading.Tasks;
 
 namespace MyProject
 {
-    class TrainStop
+    public class TrainStop :ICloneable
     {
         public TrainStop(int id, DateTime arriv, DateTime depart, Station station)
         {
             TrainStop_ID = id;
+            Station = station;
+            Arrival_datetime = arriv;
+            Departure_datetime = depart;
+        }
+        public TrainStop(DateTime arriv, DateTime depart, Station station)
+        {
             Station = station;
             Arrival_datetime = arriv;
             Departure_datetime = depart;
@@ -26,5 +32,9 @@ namespace MyProject
         [Required]
         public DateTime Departure_datetime { get; set; }
 
+        public object Clone()
+        {
+            return new TrainStop(this.Arrival_datetime, this.Departure_datetime, this.Station);
+        }
     }
 }

@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MyProject
 {
-    public class Station
+    public class Station :ICloneable
     {
         public Station()
         {
@@ -27,5 +27,10 @@ namespace MyProject
 
         [Required]
         public Address Address { get; set; }
+
+        public object Clone()
+        {
+            return new Station(Station_ID, Name, Address);
+        }
     }
 }

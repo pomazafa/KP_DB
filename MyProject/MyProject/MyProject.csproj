@@ -79,10 +79,26 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Address.cs" />
+    <Compile Include="AdminWindow.xaml.cs">
+      <DependentUpon>AdminWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ChooseStationWindow.xaml.cs">
       <DependentUpon>ChooseStationWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Client.cs" />
+    <Compile Include="Controller.cs" />
+    <Compile Include="CreateTripSelectTrainWindow.xaml.cs">
+      <DependentUpon>CreateTripSelectTrainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CreateTripTrainChoice.xaml.cs">
+      <DependentUpon>CreateTripTrainChoice.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CreateTripTrainInfo.xaml.cs">
+      <DependentUpon>CreateTripTrainInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CreateTripWindow.xaml.cs">
+      <DependentUpon>CreateTripWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Employee.cs" />
     <Compile Include="EmployeeWindow.xaml.cs">
       <DependentUpon>EmployeeWindow.xaml</DependentUpon>
@@ -99,7 +115,27 @@
     </Compile>
     <Compile Include="TrainStop.cs" />
     <Compile Include="Trip.cs" />
+    <Page Include="AdminWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ChooseStationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CreateTripSelectTrainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CreateTripTrainChoice.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CreateTripTrainInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CreateTripWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

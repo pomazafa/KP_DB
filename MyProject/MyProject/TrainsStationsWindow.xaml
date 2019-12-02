@@ -12,18 +12,31 @@
             <RowDefinition></RowDefinition>
             <RowDefinition Height="100"></RowDefinition>
         </Grid.RowDefinitions>
-        <DataGrid Grid.Row="0" Style="{DynamicResource MyDataGrid}"
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <DataGrid Grid.Row="0" Grid.ColumnSpan="2" Style="{DynamicResource MyDataGrid}"
                   Margin="10" Name="ResSet" SelectionMode="Single"
                   CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" IsReadOnly="True">
+            <DataGrid.RowHeaderTemplate>
+                <DataTemplate>
+                    <ToggleButton x:Name="RowHeaderToggleButton"
+				Cursor="Hand" />
+                </DataTemplate>
+            </DataGrid.RowHeaderTemplate>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Station name" Binding="{Binding Station.Name}" Width="*"></DataGridTextColumn>
                 <DataGridTextColumn Header="Arrival time" Binding="{Binding Arrival_datetime}" Width="auto"></DataGridTextColumn>
                 <DataGridTextColumn Header="Departure time" Binding="{Binding Departure_datetime}" Width="auto"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Ok" Name="Ok" Click="Ok_Click" Width="250"
+        <Button Content="Back" Name="Back"  Click="Back_Click"
                 Style="{DynamicResource MyButton}"
-                Grid.Row="1"></Button>
+                Grid.Row="1" Grid.Column="0"></Button>
+        <Button Content="Ok" Name="Ok" Click="Ok_Click" 
+                Style="{DynamicResource MyButton}"
+                Grid.Row="1" Grid.Column="1"></Button>
         
     </Grid>
 </Window>

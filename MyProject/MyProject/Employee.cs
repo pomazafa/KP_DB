@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MyProject
 {
-    class Employee
+    public class Employee
     {
         public Employee(int id, int uid, int cid, int oid, int isA)
         {

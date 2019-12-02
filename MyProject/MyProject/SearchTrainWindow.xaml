@@ -43,13 +43,14 @@
         <Button Content="Choose" Name="Choose_Station2" Click="Choose_Station_Click" 
                 Style="{DynamicResource MyButton}"
                 Grid.Column="1" Grid.Row="2"></Button>
-        <Button Content="All Stations" Name="View_Stations" Click="View_Stations_Click"
-                Style="{DynamicResource MyButton}"
-                Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2"></Button>
 
         <Button Content="Search" Name="Search" Grid.ColumnSpan="2" Click="Search_Click"
                 Style="{DynamicResource MyButton}"
-                Grid.Column="0" Grid.Row="4"></Button>
+                Grid.Column="0" Grid.Row="3"></Button>
+
+        <Button Content="Exit" Name="Exit" Click="Exit_Click"
+                Style="{DynamicResource MyButton}"
+                Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"></Button>
 
         <DataGrid AlternationCount="2"  Grid.Row="0" Grid.Column="3" Grid.RowSpan="3" Style="{DynamicResource MyDataGrid}"
                    Name="ResSet" SelectionMode="Single" SelectionChanged="ResSet_SelectionChanged"

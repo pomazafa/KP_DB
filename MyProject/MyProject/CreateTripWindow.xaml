@@ -1,0 +1,71 @@
+﻿<Window x:Class="MyProject.CreateTripWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MyProject"
+        mc:Ignorable="d"
+        Title="CreateTripWindow" Style="{StaticResource MyWindow}" 
+        MinHeight="400" MinWidth="800"  Name="CreateTrip">
+    <!--Loaded="Window_Loaded"-->
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.2*"></ColumnDefinition>
+            <ColumnDefinition Width="0.2*"></ColumnDefinition>
+            <ColumnDefinition Width="10"></ColumnDefinition>
+            <ColumnDefinition Width="0.6*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource brushWatermarkBackground}" Style="{StaticResource EntryFieldStyle}" >
+            <TextBlock Margin="5,2" Text="Arrival datetime"   Foreground="{StaticResource brushWatermarkForeground}"
+                       Visibility="{Binding ElementName=Date1, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <TextBlock Margin="5,27" Text="(dd.mm.yyyy hh:mi)"  Foreground="{StaticResource brushWatermarkForeground}"
+                       Visibility="{Binding ElementName=Date1, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <TextBox Name="Date1" MaxLength="16" Background="Transparent" Foreground="{StaticResource brushForegroudTextfield}" BorderBrush="{StaticResource brushWatermarkBorder}" />
+        </Grid>
+        <Grid Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource brushWatermarkBackground}" Style="{StaticResource EntryFieldStyle}" >
+            <TextBlock Margin="5,2" Text="Departure datetime"   Foreground="{StaticResource brushWatermarkForeground}"
+                       Visibility="{Binding ElementName=Date2, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <TextBlock Margin="5,27" Text="(dd.mm.yyyy hh:mi)"  Foreground="{StaticResource brushWatermarkForeground}"
+                       Visibility="{Binding ElementName=Date2, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <TextBox Name="Date2" MaxLength="16" Background="Transparent" Foreground="{StaticResource brushForegroudTextfield}" BorderBrush="{StaticResource brushWatermarkBorder}" />
+        </Grid>
+        <Grid Grid.Column="0" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource brushWatermarkBackground}" Style="{StaticResource EntryFieldStyle}" >
+            <TextBlock Margin="5,2" Text="Station" Foreground="{StaticResource brushWatermarkForeground}"
+                       Visibility="{Binding ElementName=Station1, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <TextBox Name="Station1" Background="Transparent" Foreground="{StaticResource brushForegroudTextfield}" IsEnabled="False" BorderBrush="{StaticResource brushWatermarkBorder}" />
+        </Grid>
+        <Button Content="Choose" Name="Choose_Station1"  Click="Choose_Station1_Click"
+                Style="{DynamicResource MyButton}"
+                Grid.Column="1" Grid.Row="2"></Button>
+        <Button Content="Add stop" Name="Add" Grid.ColumnSpan="2" Click="Add_Click"
+                Style="{DynamicResource MyButton}"
+                Grid.Column="0" Grid.Row="3"></Button>
+
+        <Button Content="Cancel" Name="Exit"  Click="Exit_Click"
+                Style="{DynamicResource MyButton}"
+                Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"></Button>
+
+        <DataGrid Grid.Row="0" Style="{DynamicResource MyDataGrid}" SelectionChanged="ResSet_SelectionChanged"
+                  Margin="10" Name="ResSet" SelectionMode="Single" Grid.Column="3" Grid.RowSpan="3"
+                  CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Station name" Binding="{Binding Station.Name}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Arrival time" Binding="{Binding Arrival_datetime}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Departure time" Binding="{Binding Departure_datetime}" Width="*"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="Delete stop" Name="Delete"  IsEnabled="False"
+                Style="{DynamicResource MyButton}" Click="Delete_Click"
+                Grid.Column="3" Grid.Row="3"></Button>
+        <Button Content="Next" Name="Next"  IsEnabled="False"
+                Style="{DynamicResource MyButton}" Click="Create_Click"
+                Grid.Column="3" Grid.Row="4"></Button>
+    </Grid>
+</Window>

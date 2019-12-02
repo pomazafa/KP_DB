@@ -5,11 +5,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MyProject
 {
-    class Train
+    public class Train
     {
-        public Train (int id, string number, int count, float cost)
+        public Train (int id, string number, int count, int cost)
         {
             TRAIN_ID = id;
+            TRAINNUMBER = number;
+            COUNTSEATS = count;
+            COSTPERSTATION = cost;
+        }
+        public Train(string number, int count, int cost)
+        {
             TRAINNUMBER = number;
             COUNTSEATS = count;
             COSTPERSTATION = cost;
@@ -26,7 +32,7 @@ namespace MyProject
         public int COUNTSEATS { get; set; }
 
         [Required]
-        public float COSTPERSTATION { get; set; }
+        public int COSTPERSTATION { get; set; }
 
     }
 }

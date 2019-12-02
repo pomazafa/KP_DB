@@ -23,10 +23,12 @@ namespace MyProject
     {
 
         OracleConnection connection;
-        public EmployeeWindow(OracleConnection con)
+        Employee emp;
+        public EmployeeWindow(OracleConnection con, Employee emp)
         {
             InitializeComponent();
             connection = con;
+            this.emp = emp;
         }
 
         private void ExportXML_Click(object sender, RoutedEventArgs e)
@@ -45,98 +47,36 @@ namespace MyProject
         {
             DataSet ds = new DataSet();
             ds.ReadXml("clientsdb.xml");
-            // выбираем первую таблицу
+
             DataTable dt = ds.Tables[0];
 
-            string[] LOGIN = new string[dt.Rows.Count];
-
-            string[] PASSWORD = new string[dt.Rows.Count];
-
-            string[] LASTNAME = new string[dt.Rows.Count];
-
-            string[] FIRSTNAME = new string[dt.Rows.Count];
-
-            string[] PATRONIMIC = new string[dt.Rows.Count];
-
-            DateTime[] BDAY = new DateTime[dt.Rows.Count];
-
-            string[] TELEPHONE = new string[dt.Rows.Count];
+            int count = 0;
 
             for (int j = 0; j < dt.Rows.Count; j++)
             {
-                LOGIN[j] = Convert.ToString(dt.Rows[j]["LOGIN"]);
-                PASSWORD[j] = Convert.ToString(dt.Rows[j]["PASSWORD_HASH"]);
-                LASTNAME[j] = Convert.ToString(dt.Rows[j]["LASTNAME"]);
-                FIRSTNAME[j] = Convert.ToString(dt.Rows[j]["FIRSTNAME"]);
-                PATRONIMIC[j] = Convert.ToString(dt.Rows[j]["PATRONIMIC"]);
-                BDAY[j] = Convert.ToDateTime(dt.Rows[j]["BDAY"]);
-                TELEPHONE[j] = Convert.ToString(dt.Rows[j]["TELEPHONE"]);
-            
+                try
+                {
+                    OracleCommand cmd = new OracleCommand();
+                    cmd.CommandText = "insert into system.client(login, password_hash, lastname, firstname, patronimic, bday, telephone) values ('" + Convert.ToString(dt.Rows[j]["LOGIN"]) + "', '" +
+                            Convert.ToString(dt.Rows[j]["PASSWORD_HASH"]) + "', '" + Convert.ToString(dt.Rows[j]["LASTNAME"]) + "', '" + Convert.ToString(dt.Rows[j]["FIRSTNAME"]) + "', '" + Convert.ToString(dt.Rows[j]["PATRONIMIC"])+ 
+                            "', TO_DATE('" + Convert.ToDateTime(dt.Rows[j]["BDAY"]) + "', 'DD-MM-YYYY HH24:MI:SS'), '" + Convert.ToString(dt.Rows[j]["TELEPHONE"]) + "')";
 
-            OracleParameter login = new OracleParameter();
-            login.OracleDbType = OracleDbType.Varchar2;
-            login.Value = LOGIN;
+                    cmd.Connection = connection;
 
-            OracleParameter password = new OracleParameter();
-            password.OracleDbType = OracleDbType.Varchar2;
-            password.Value = PASSWORD;
+                    cmd.CommandType = System.Data.CommandType.Text;
 
-            OracleParameter lastname = new OracleParameter();
-            lastname.OracleDbType = OracleDbType.Varchar2;
-            lastname.Value = LASTNAME;
+                    int c = cmd.ExecuteNonQuery();
 
-            OracleParameter firstname = new OracleParameter();
-            firstname.OracleDbType = OracleDbType.Varchar2;
-            firstname.Value = FIRSTNAME;
-
-            OracleParameter patronimic = new OracleParameter();
-            patronimic.OracleDbType = OracleDbType.Varchar2;
-            patronimic.Value = PATRONIMIC;
-
-            OracleParameter bday = new OracleParameter();
-            bday.OracleDbType = OracleDbType.Date;
-            bday.Value = BDAY;
-
-            OracleParameter telephone = new OracleParameter();
-            telephone.OracleDbType = OracleDbType.Varchar2;
-            telephone.Value = TELEPHONE;
-            try
-            {
-                OracleCommand cmd = new OracleCommand();
-                    MessageBox.Show(BDAY[j].Date.ToString());
-                cmd.CommandText = "insert into system.client(login, password_hash, lastname, firstname, patronimic, bday, telephone) values ('" + LOGIN[j] + "', '"+
-                        PASSWORD[j] + "', '" + LASTNAME[j] + "', '" + FIRSTNAME[j] + "', '" + PATRONIMIC[j] + "', TO_DATE('" + BDAY[j].Date.ToString() +
-                        "', 'DD-MM-YYYY HH24:MI:SS'), '" + TELEPHONE[j] + "')";
-
-                cmd.Connection = connection;
-
-                cmd.CommandType = System.Data.CommandType.Text;
-
-                int c = cmd.ExecuteNonQuery();
-
+                    if (c != 0)
+                        count += c;
+                }
+                catch (Exception ex)
+                {
+                    //MessageBox.Show(ex.Message);
+                }
             }
-            catch (Exception ex)
-            {
-                //MessageBox.Show(ex.Message);
-            }
-        }
-           // foreach (DataColumn column in dt.Columns)
-             //   MessageBox.Show("\t" + column.ColumnName, column.ColumnName);
-            //// перебор всех строк таблицы
-            //foreach (DataRow row in dt.Rows)
-            //{
-            //    var cells = row.ItemArray;
-            //    foreach (object cell in row.ItemArray)
-            //        MessageBox.Show("\t" + cell.ToString());
-            //}
 
-            //OracleDataAdapter da = new OracleDataAdapter();
-            //OracleCommand cmdOra = new OracleCommand("system.insertClient", connection);
-            //cmdOra.CommandType = CommandType.StoredProcedure;
-
-            //da.InsertCommand = cmdOra;
-            //da.Update(ds);
-
+            MessageBox.Show(count + " rows exported", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
@@ -162,7 +102,7 @@ namespace MyProject
 
             if (!dr.HasRows)
             {
-                MessageBox.Show("Sorry. There is something wrong with database :c");
+                MessageBox.Show("Sorry. There is no rows in database :c", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else
             {
@@ -177,6 +117,39 @@ namespace MyProject
                     ResSet.Items.Add(tk);
                 }
             }
+        }
+
+        private void ResSet_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ResSet.SelectedItem != null)
+            {
+                Process.IsEnabled = true;
+            }
+            else
+            {
+                Process.IsEnabled = false;
+            }
+        }
+
+        private void Process_Click(object sender, RoutedEventArgs e)
+        {
+            OracleCommand cmd = new OracleCommand();
+
+            cmd.CommandText = "update system.ticket set employee_id = " + emp.Employee_ID + ", date_of_purchase = TO_DATE('" + DateTime.Now + "', 'DD.MM.YYYY HH24:MI:SS') where ticket_id = " + ((Ticket)ResSet.SelectedItem).TicketID;
+
+            cmd.Connection = connection;
+
+            cmd.CommandType = System.Data.CommandType.Text;
+
+            int c = cmd.ExecuteNonQuery();
+
+            if(c != 0)
+            {
+                MessageBox.Show("Ticket is processed", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                ResSet.Items.Remove(ResSet.SelectedItem);
+            }
+
+            ResSet.Items.Refresh();
         }
     }
 }

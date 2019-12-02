@@ -1,3 +1,5 @@
+-- creating db
+
 CREATE TABLE Client
 (client_id NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1),
   login varchar(30) NOT NULL UNIQUE,
@@ -31,7 +33,7 @@ create table Address
     town varchar(30),
     street varchar(30),
     house varchar(10),
-    flat number,
+    --flat number,
     CONSTRAINT address_pk PRIMARY KEY (address_id)
 )
 
@@ -95,7 +97,6 @@ create table Train_stop
     constraint train_stop_pk PRIMARY KEY(train_stop_id)
 )
 select * from system.trip;
-insert into train_stop (arrival_time, departure_time, station_id, trip_id) values(TO_DATE('10-12-2019 15:03', 'DD-MM-YYYY HH24:MI'), TO_DATE('10-12-2019 15:09', 'DD-MM-YYYY HH24:MI'), 1, 1);
 insert into train_stop (arrival_time, departure_time, station_id, trip_id) values(TO_DATE('10-12-2019 15:45', 'DD-MM-YYYY HH24:MI'), TO_DATE('10-12-2019 15:54', 'DD-MM-YYYY HH24:MI'), 2, 1);
 insert into train_stop (arrival_time, departure_time, station_id, trip_id) values(TO_DATE('10-12-2019 12:01', 'DD-MM-YYYY HH24:MI'), TO_DATE('10-12-2019 12:05', 'DD-MM-YYYY HH24:MI'), 2, 2);
 insert into train_stop (arrival_time, departure_time, station_id, trip_id) values(TO_DATE('10-12-2019 12:15', 'DD-MM-YYYY HH24:MI'), TO_DATE('10-12-2019 12:21', 'DD-MM-YYYY HH24:MI'), 1, 2);
@@ -103,29 +104,9 @@ insert into train_stop (arrival_time, departure_time, station_id, trip_id) value
 insert into train_stop (arrival_time, departure_time, station_id, trip_id) values(TO_DATE('30-11-2019 10:57', 'DD-MM-YYYY HH24:MI'), TO_DATE('30-11-2019 11:00', 'DD-MM-YYYY HH24:MI'), 1, 3);
 insert into train_stop (arrival_time, departure_time, station_id, trip_id) values(TO_DATE('30-11-2019 10:02', 'DD-MM-YYYY HH24:MI'), TO_DATE('30-11-2019 10:05', 'DD-MM-YYYY HH24:MI'), 2, 3);
 
-select * from trip;
-drop table system.train_stop;
-select * from train_stop inner join station on station.station_id = train_stop.station_id;
-
-create table Ticket
-(
-    ticket_id NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1),
-    date_of_purchase date,
-    date_of_trip date not null,
-    client_id number not null,
-    trip_id number not null,
-    FOREIGN KEY (client_id)
-    REFERENCES Client (client_id),
-    FOREIGN KEY (trip_id)
-    REFERENCES Trip (trip_id),
-    CONSTRAINT ticket_pk PRIMARY KEY (ticket_id)
-)
-drop table ticket;
-select * from system.Trip inner join system.Train on system.Trip.train_id = system.Train.train_id;
---select * from client;
-insert into ticket(date_of_trip, client_id, trip_id) values (TO_DATE('30-11-2019 15:32', 'DD-MM-YYYY HH24:MI'), 6, 3);
-
-select * from ticket;
+--select * from trip;
+--drop table system.train_stop;
+--select * from train_stop inner join station on station.station_id = train_stop.station_id;
 
 create table Card
 (
@@ -166,14 +147,40 @@ create table Employee
     CONSTRAINT employee_pk PRIMARY KEY (employee_id)
 )
 --select * from client;
-
+commit;
 insert into Employee ( card_id, occupation_id, client_id, is_admin) values (1, 1, 2, 1);
+insert into Employee ( card_id, occupation_id, client_id, is_admin) values (1, 1, 190, 0);
+
+create table Ticket
+(
+    ticket_id NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1),
+    date_of_purchase date,
+    date_of_trip date not null,
+    client_id number not null,
+    employee_id number,
+    trip_id number not null,
+    FOREIGN KEY (client_id)
+    REFERENCES Client (client_id),
+    FOREIGN KEY (employee_id)
+    REFERENCES Employee (employee_id),
+    FOREIGN KEY (trip_id)
+    REFERENCES Trip (trip_id),
+    CONSTRAINT ticket_pk PRIMARY KEY (ticket_id)
+)
+--drop table ticket;
+--select * from system.Trip inner join system.Train on system.Trip.train_id = system.Train.train_id;
+--select * from client;
+--insert into ticket(date_of_trip, client_id, trip_id) values (TO_DATE('30-11-2019 15:32', 'DD-MM-YYYY HH24:MI'), 6, 3);
+
+--select * from ticket;
 
 commit;
+
+--drop tables
+drop table ticket;
 drop table Employee;
 drop table Occupation;
 drop table Card;
-drop table ticket;
 drop table train_stop;
 drop table trip;
 drop table Station;
@@ -186,17 +193,27 @@ select * from Client;
 
 alter session set "_ORACLE_SCRIPT"=true;
 
-CREATE USER kuser IDENTIFIED BY qwe123qwe;
+--CREATE USER kuser IDENTIFIED BY qwe123qwe;
 
-GRANT SELECT ANY TABLE TO c##admin_user;
 
-GRANT INSERT ANY TABLE TO c##admin_user;
+--GRANTS
 
-GRANT UPDATE on client TO c##admin_user;
+--GRANT SELECT ANY TABLE TO c##admin_user;
+
+--GRANT INSERT ANY TABLE TO c##admin_user;
+
+--GRANT UPDATE on client TO c##admin_user;
 
 GRANT UPDATE on system.client TO DPVCORE;
+grant update on system.employee to DPVCORE;
+grant update on system.ticket to DPVCORE;
+grant update on system.card to DPVCORE;
+grant update on system.occupation to DPVCORE;
 GRANT insert on system.client TO DPVCORE;
 GRANT insert on system.ticket TO DPVCORE;
+GRANT insert on system.train TO DPVCORE;
+GRANT insert on system.train_stop TO DPVCORE;
+GRANT insert on system.trip TO DPVCORE;
 grant select on system.client to DPVCORE;
 grant select on system.address to DPVCORE;
 grant select on system.train_stop to DPVCORE;
@@ -206,29 +223,37 @@ grant select on system.station to DPVCORE;
 grant select on system.employee to DPVCORE;
 grant select on system.ticket to DPVCORE;
 
+grant execute on system.getTripId to DPVCORE;
+grant execute on system.getTrainIdByNumber to DPVCORE;
 grant execute on system.getUserByLogin to DPVCORE;
 grant execute on system.getTrip to DPVCORE;
 grant execute on system.insertClient to DPVCORE;
 grant execute on system.getEmployeeByUserId to DPVCORE; 
 
-GRANT UPDATE on system.client TO kuser;
-GRANT insert on system.client TO kuser;
-grant select on system.client to kuser;
-grant select on system.address to kuser;
-grant select on system.train_stop to kuser;
-grant select on system.train to kuser;
-grant select on system.trip to kuser;
-grant select on system.station to kuser;
-grant select on system.employee to kuser;
-grant insert on system.ticket to kuser;
+delete client where Login = '12345';
 
-grant execute on system.getUserByLogin to kuser;
-grant execute on system.getTrip to kuser;
-grant execute on system.insertClient to kuser;
-grant execute on system.getEmployeeByUserId to kuser; 
+select * from client c inner join employee e on c.client_id = e.client_id;
 
-select * from system.client;
+--GRANT UPDATE on system.client TO c##kuser;
+GRANT insert on system.client TO c##kuser;
+grant select on system.client to c##kuser;
+grant select on system.address to c##kuser;
+grant select on system.train_stop to c##kuser;
+grant select on system.train to c##kuser;
+grant select on system.trip to c##kuser;
+grant select on system.station to c##kuser;
+grant select on system.employee to c##kuser;
+grant insert on system.ticket to c##kuser;
 
+grant execute on system.getUserByLogin to c##kuser;
+grant execute on system.getTrip to c##kuser;
+grant execute on system.insertClient to c##kuser;
+grant execute on system.getEmployeeByUserId to c##kuser; 
+
+--select * from system.client;
+
+
+-- PROCEDURES
 CREATE OR REPLACE PROCEDURE getUserByLogin(
        p__userlogin IN system.client.login%TYPE,
        o__user_id OUT system.client.client_id%TYPE,
@@ -246,9 +271,30 @@ BEGIN
   from  system.client WHERE login = p__userlogin;
 END;
 
-select * from station;
+CREATE OR REPLACE PROCEDURE getTrainIdByNumber(
+       p_train_number IN system.train.train_number%TYPE,
+       o_train_id OUT system.train.train_id%TYPE
+       )
+IS
+BEGIN
+  select train_id into o_train_id from system.train where train_number = p_train_number;
+END;
 
-describe train
+CREATE OR REPLACE PROCEDURE getTripId(
+       p_stat1_id IN system.station.station_id%TYPE,
+       p_stat2_id IN system.station.station_id%TYPE,
+       p_train_id IN system.train.train_id%TYPE,
+       o_trip_id OUT system.trip.trip_id%TYPE
+       )
+IS
+BEGIN
+  select trip_id into o_trip_id from system.trip where train_id = p_train_id and start_station_id = p_stat1_id and end_station_id = p_stat2_id;
+END;
+
+
+--select * from station;
+
+--describe train
 
 CREATE OR REPLACE PROCEDURE getTrip(
        in_st_name1 IN system.station.station_name%TYPE,
@@ -312,22 +358,9 @@ END;
 --describe train;
 commit;
 --drop procedure gettrip;
-exec getUserByLogin('Login');
---declare
---       o1 system.trip.trip_id%TYPE;
---       o2 system.station.station_id%TYPE;
---       o3 system.station.station_name%TYPE;
---       o4 system.station.station_id%TYPE;
---       o5 system.station.station_name%TYPE;
---       o6 system.train.train_id%TYPE;
---       o7 system.train.train_number%TYPE;
---       o8 system.train.count_seats%TYPE;
---       o9 system.train.cost_per_station%TYPE;
---begin
---  select getTrip('Minsk West', 'Minsk South') into o1, o2, o3, o4, o5, o6, o7, o8, o9 from dual;
---  dbms_output.put_line(' '||o3);
---end;
 
+
+-- SELECT SCRIPTS
 SELECT *
    FROM system.trip
 WHERE EXISTS (SELECT *
@@ -344,7 +377,7 @@ select * from system.Trip inner join system.train on system.Trip.train_id = syst
                   FROM system.train_stop
                WHERE system.trip.trip_id = system.train_stop.trip_id and system.train_stop.station_id = 2 and '10-12-2019' = trim(TO_CHAR(arrival_time, 'dd-mm-yyyy')));
 
-select * from system.trip;
+--select * from system.trip;
 select * from system.train_stop t1 inner join system.train_stop t2 on t1.trip_id = t2.trip_id where t1.station_id = 1 and t2.station_id = 2 and t1.departure_time < t2.departure_time;           
                
 select * from system.train_stop where trip_id = 2;
@@ -352,18 +385,20 @@ select * from system.train_stop where trip_id = 2;
 
 grant create user to DPVCORE;
 
-SELECT parameter,value
-FROM gv$OPTION
-WHERE PARAMETER = 'Oracle Database Vault';
-
-
 select trim(TO_CHAR(arrival_time, 'dd.mm.yyyy')) from system.train_stop inner join system.station on system.station.station_id = system.train_stop.station_id;
 
 select ti.ticket_id, ti.date_of_trip, cl.client_id, tr.trip_id, tr.start_station_id, tr.end_station_id,  trn.cost_per_station, trn.train_id, trn.train_number, trn.count_seats, cl.lastname from system.ticket ti inner join system.Trip tr on ti.trip_id = tr.trip_id inner join system.train trn on tr.train_id = trn.train_id inner join system.client cl on ti.client_id = cl.client_id where ti.date_of_purchase is null;
 
 select * from system.train_stop inner join system.station on system.station.station_id = system.train_stop.station_id where '10-12-2019' = trim(TO_CHAR(arrival_time, 'dd-mm-yyyy')) and trip_id = 2;
-select * from system.train_stop inner join system.station on system.station.station_id = system.train_stop.station_id where '10-12-2019' = ltrim(TO_CHAR(arrival_time,'dd-mm-yyyy')) and trip_id = 23;
+select * from system.train_stop inner join system.station on system.station.station_id = system.train_stop.station_id where '11-12-2019' = ltrim(TO_CHAR(arrival_time,'dd-mm-yyyy'));
 
 select * from system.train_stop;
 select * from system.trip where trip_id = (select trip_id from system.train_stop where station_id = 1) intersect select * from system.trip where trip_id = (select trip_id from system.train_stop where station_id = 2) ;
+
+--DV Check
+
+SELECT parameter,value
+FROM gv$OPTION
+WHERE PARAMETER = 'Oracle Database Vault';
+
 

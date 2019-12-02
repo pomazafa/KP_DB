@@ -23,6 +23,7 @@ namespace MyProject
         object Field;
         OracleConnection connection;
         SearchTrainWindow window;
+        CreateTripWindow windowTrip;
         public ChooseStationWindow(object field, SearchTrainWindow wind, OracleConnection connection)
         {
             InitializeComponent();
@@ -30,6 +31,14 @@ namespace MyProject
 
             this.connection = connection;
             this.window = wind;
+        }
+
+        public ChooseStationWindow(CreateTripWindow wind, OracleConnection connection)
+        {
+            InitializeComponent();
+
+            this.connection = connection;
+            this.windowTrip = wind;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -47,7 +56,7 @@ namespace MyProject
 
             if (!dr.HasRows)
             {
-                MessageBox.Show("Sorry. There is something wrong with database :c");
+                MessageBox.Show("Sorry. There is something wrong with database :c", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else
             {
@@ -64,17 +73,30 @@ namespace MyProject
         {
             if(ResSet.SelectedItem != null)
             {
-                ((TextBox)Field).Text = ((Station)ResSet.SelectedItem).Name;
-                if (((TextBox)Field).Name == "Station1")
-                    window.stat1 = (Station)ResSet.SelectedItem;
-                if (((TextBox)Field).Name == "Station2")
-                    window.stat2 = (Station)ResSet.SelectedItem;
+                if (window != null)
+                {
+                    ((TextBox)Field).Text = ((Station)ResSet.SelectedItem).Name;
+                    if (((TextBox)Field).Name == "Station1")
+                        window.stat1 = (Station)ResSet.SelectedItem;
+                    if (((TextBox)Field).Name == "Station2")
+                        window.stat2 = (Station)ResSet.SelectedItem;
+                }
+                if (windowTrip != null)
+                {
+                    windowTrip.stat1 = (Station)ResSet.SelectedItem;
+                   // MessageBox.Show(windowTrip.Station1.Text);
+                }
                 Close();
             }
             else
             {
-                MessageBox.Show("You didn't select a station");
+                MessageBox.Show("You didn't select a station", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
+        }
+
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

@@ -6,11 +6,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MyProject
 {
-    class Trip
+    public class Trip
     {
         public Trip(int id, Station st1, Station st2, Train t)
         {
             Trip_ID = id;
+            Station1 = st1;
+            Station2 = st2;
+            Train = t;
+        }
+        public Trip(Station st1, Station st2, Train t)
+        {
             Station1 = st1;
             Station2 = st2;
             Train = t;

@@ -102,12 +102,10 @@ namespace MyProject
 
                         int c = cmd.ExecuteNonQuery();
 
-
-
                         if (c != 0)
                         {
-                            AddAdditionalFields(connection);
-                            //MessageBox.Show("Success");
+                            if(AddAdditionalFields(connection) == 1)
+                                MessageBox.Show("User is successfully created", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                         }
 
                         Close();
@@ -119,18 +117,16 @@ namespace MyProject
                 }
                 else
                 {
-                    MessageBox.Show("Passwords do not match");
+                    MessageBox.Show("Passwords do not match", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
             else
             {
-                MessageBox.Show("Fill in the fields! Required fields are: Surname, Name, Day of Birth, Login, Password, Repeat Password", "Warning");
+                MessageBox.Show("Fill in the fields! Required fields are: Surname, Name, Day of Birth, Login, Password, Repeat Password", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-
-            
         }
 
-        private bool AddAdditionalFields(OracleConnection con)
+        private int AddAdditionalFields(OracleConnection con)
         {
             try
             {
@@ -163,14 +159,14 @@ namespace MyProject
 
                     cmd.CommandType = System.Data.CommandType.Text;
 
-                    cmd.ExecuteNonQuery();
+                    return cmd.ExecuteNonQuery();
                 }
-                return true;
+                return 0;
             }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message);
-                return false;
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return 0;
             }
         }
         private bool CheckFields()
