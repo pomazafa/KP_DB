@@ -21,22 +21,26 @@ namespace MyProject
     public partial class AdminWindow : Window
     {
         OracleConnection connection;
-        public AdminWindow(OracleConnection con)
+        Employee employee;
+        public AdminWindow(OracleConnection con, Employee emp)
         {
             InitializeComponent();
             connection = con;
+            employee = emp;
         }
 
         private void CreateTrip_Click(object sender, RoutedEventArgs e)
         {
-            CreateTripWindow wind = new CreateTripWindow(connection);
+            CreateTripWindow wind = new CreateTripWindow(connection, employee);
             wind.Show();
             Close();
         }
 
         private void CreateEmp_Click(object sender, RoutedEventArgs e)
         {
-
+            SelectEmployeeUserWindow wind = new SelectEmployeeUserWindow(connection, employee);
+            wind.Show();
+            Close();
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)

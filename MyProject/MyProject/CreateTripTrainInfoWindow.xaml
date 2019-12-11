@@ -1,0 +1,51 @@
+﻿<Window x:Class="MyProject.CreateTripTrainInfoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MyProject"
+        mc:Ignorable="d"
+        Title="Train Info" MinHeight="500" MinWidth="830"
+        Style="{StaticResource MyWindow}"  >
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" Grid.Row="0" MaxWidth="400">
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource brushWatermarkBackground}" Style="{StaticResource EntryFieldStyle}" >
+                <TextBlock Margin="5,2" Text="Train number" Foreground="{StaticResource brushWatermarkForeground}"
+                       Visibility="{Binding ElementName=Number, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                <TextBox Name="Number" MaxLength="30" Foreground="{StaticResource brushForegroudTextfield}" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}" />
+            </Grid>
+        </Grid>
+        <Grid Grid.Column="0" Grid.Row="1" MaxWidth="400">
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource brushWatermarkBackground}" Style="{StaticResource EntryFieldStyle}" >
+                <TextBlock Margin="5,2" Text="Count of seats" Foreground="{StaticResource brushWatermarkForeground}"
+                       Visibility="{Binding ElementName=Count, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                <TextBox Name="Count" MaxLength="4" Foreground="{StaticResource brushForegroudTextfield}" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}" />
+            </Grid>
+        </Grid>
+        <Grid Grid.Column="0" Grid.Row="2" MaxWidth="400">
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource brushWatermarkBackground}" Style="{StaticResource EntryFieldStyle}" >
+                <TextBlock Margin="5,2" Text="Cost per station" Foreground="{StaticResource brushWatermarkForeground}"
+                        Visibility="{Binding ElementName=Cost, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                <TextBox Name="Cost" MaxLength="5" Foreground="{StaticResource brushForegroudTextfield}" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}" />
+            </Grid>
+        </Grid>
+        <Button Content="Create trip" Name="Create" MaxWidth="370" Click="Create_Click"
+                Style="{DynamicResource MyButton}"
+                Grid.Column="0" Grid.Row="3"></Button>
+
+        <Button Content="Cancel" Name="Exit" MaxWidth="370" Click="Exit_Click"
+                Style="{DynamicResource MyButton}" 
+                Grid.Column="0" Grid.Row="4"></Button>
+        
+    </Grid>
+</Window>

@@ -10,11 +10,11 @@ none
 false
 TRACE
 D:\!S5\KP\MyProject\MyProject\App.xaml
-51922989297
+16-1447109606
 
-16757755116
-151931542445
-ChooseStationWindow.xaml;MainWindow.xaml;NewUserWindow.xaml;SearchTrainWindow.xaml;TrainsStationsWindow.xaml;
+32-546853761
+16289600764
+AdminWindow.xaml;ChooseStationWindow.xaml;CreateEmployeeWindow.xaml;CreateTripSelectTrainWindow.xaml;CreateTripTrainChoiceWindow.xaml;CreateTripTrainInfoWindow.xaml;CreateTripWindow.xaml;EmployeeWindow.xaml;IsAdminChoiceWindow.xaml;MainWindow.xaml;NewUserWindow.xaml;OccupationWindow.xaml;SearchTrainWindow.xaml;SelectEmployeeUserWindow.xaml;SelectOccupationWindow.xaml;TrainsStationsWindow.xaml;
 
 False
 

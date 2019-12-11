@@ -210,6 +210,9 @@ grant update on system.ticket to DPVCORE;
 grant update on system.card to DPVCORE;
 grant update on system.occupation to DPVCORE;
 GRANT insert on system.client TO DPVCORE;
+GRANT insert on system.card TO DPVCORE;
+GRANT insert on system.occupation TO DPVCORE;
+GRANT insert on system.employee TO DPVCORE;
 GRANT insert on system.ticket TO DPVCORE;
 GRANT insert on system.train TO DPVCORE;
 GRANT insert on system.train_stop TO DPVCORE;
@@ -222,9 +225,12 @@ grant select on system.trip to DPVCORE;
 grant select on system.station to DPVCORE;
 grant select on system.employee to DPVCORE;
 grant select on system.ticket to DPVCORE;
+grant select on system.occupation to DPVCORE;
 
 grant execute on system.getTripId to DPVCORE;
+grant execute on system.getOccupationId to DPVCORE;
 grant execute on system.getTrainIdByNumber to DPVCORE;
+grant execute on system.getCardId to DPVCORE;
 grant execute on system.getUserByLogin to DPVCORE;
 grant execute on system.getTrip to DPVCORE;
 grant execute on system.insertClient to DPVCORE;
@@ -251,7 +257,6 @@ grant execute on system.insertClient to c##kuser;
 grant execute on system.getEmployeeByUserId to c##kuser; 
 
 --select * from system.client;
-
 
 -- PROCEDURES
 CREATE OR REPLACE PROCEDURE getUserByLogin(
@@ -280,6 +285,16 @@ BEGIN
   select train_id into o_train_id from system.train where train_number = p_train_number;
 END;
 
+CREATE OR REPLACE PROCEDURE getCardId(
+       p_card_number IN system.card.card_number%TYPE,
+       o_card_id OUT system.card.card_id%TYPE
+       )
+IS
+BEGIN
+  select card_id into o_card_id from system.card where card_number = p_card_number;
+END;
+
+
 CREATE OR REPLACE PROCEDURE getTripId(
        p_stat1_id IN system.station.station_id%TYPE,
        p_stat2_id IN system.station.station_id%TYPE,
@@ -288,9 +303,19 @@ CREATE OR REPLACE PROCEDURE getTripId(
        )
 IS
 BEGIN
-  select trip_id into o_trip_id from system.trip where train_id = p_train_id and start_station_id = p_stat1_id and end_station_id = p_stat2_id;
+  select max(trip_id) into o_trip_id from system.trip where train_id = p_train_id and start_station_id = p_stat1_id and end_station_id = p_stat2_id;
 END;
 
+CREATE OR REPLACE PROCEDURE getOccupationId(
+       p_name IN system.occupation.name%TYPE,
+       p_hours IN system.occupation.hours_per_week%TYPE,
+       p_cost IN system.occupation.cost_per_hour%TYPE,
+       o_occ_id OUT system.occupation.occupation_id%TYPE
+       )
+IS
+BEGIN
+  select occupation_id into o_occ_id from system.occupation where name = p_name and hours_per_week = p_hours and cost_per_hour = p_cost;
+END;
 
 --select * from station;
 
@@ -401,4 +426,28 @@ SELECT parameter,value
 FROM gv$OPTION
 WHERE PARAMETER = 'Oracle Database Vault';
 
+--100000 rows
+
+BEGIN 
+    FOR x IN 1 .. 100000 LOOP
+         insert into client(login, password_hash, lastname, firstname, patronimic, bday) 
+         values ('test' || TO_CHAR(x), '$MYHASH$V1$1000$1s03xYaRhcDoXBOn/QRPuQWsILnfbkrBnYKh2eX4IRvaQJWp', 'test' || TO_CHAR(x), 'test' || TO_CHAR(x), 'test' || TO_CHAR(x), '12-05-1999');
+    END LOOP;
+END;
+--select count(*) from client;
+commit;
+
+
+CREATE INDEX train_stop_station_i
+ON train_stop(station_id);
+
+drop  INDEX train_stop_station_i;
+
+EXPLAIN PLAN FOR
+select * from system.train_stop where station_id = 2;
+
+SELECT 
+    PLAN_TABLE_OUTPUT 
+FROM 
+    TABLE(DBMS_XPLAN.DISPLAY());
 

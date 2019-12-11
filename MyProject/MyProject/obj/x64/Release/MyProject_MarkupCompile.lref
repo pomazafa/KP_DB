@@ -1,8 +1,19 @@
 ﻿
 FD:\!S5\KP\MyProject\MyProject\App.xaml;;
+FD:\!S5\KP\MyProject\MyProject\AdminWindow.xaml;;
 FD:\!S5\KP\MyProject\MyProject\ChooseStationWindow.xaml;;
+FD:\!S5\KP\MyProject\MyProject\CreateEmployeeWindow.xaml;;
+FD:\!S5\KP\MyProject\MyProject\CreateTripSelectTrainWindow.xaml;;
+FD:\!S5\KP\MyProject\MyProject\CreateTripTrainChoiceWindow.xaml;;
+FD:\!S5\KP\MyProject\MyProject\CreateTripTrainInfoWindow.xaml;;
+FD:\!S5\KP\MyProject\MyProject\CreateTripWindow.xaml;;
+FD:\!S5\KP\MyProject\MyProject\EmployeeWindow.xaml;;
+FD:\!S5\KP\MyProject\MyProject\IsAdminChoiceWindow.xaml;;
 FD:\!S5\KP\MyProject\MyProject\MainWindow.xaml;;
 FD:\!S5\KP\MyProject\MyProject\NewUserWindow.xaml;;
+FD:\!S5\KP\MyProject\MyProject\OccupationWindow.xaml;;
 FD:\!S5\KP\MyProject\MyProject\SearchTrainWindow.xaml;;
+FD:\!S5\KP\MyProject\MyProject\SelectEmployeeUserWindow.xaml;;
+FD:\!S5\KP\MyProject\MyProject\SelectOccupationWindow.xaml;;
 FD:\!S5\KP\MyProject\MyProject\TrainsStationsWindow.xaml;;
 

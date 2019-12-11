@@ -141,8 +141,7 @@ namespace MyProject
                                     "(ADDRESS = (PROTOCOL = TCP)(HOST = localhost)(PORT = 1521))" +
                                     "(CONNECT_DATA = " +
                                     "  (SERVER = DEDICATED)" +
-                                    "  (SERVICE_NAME = orcl)" +
-                                    ")" +
+                                    "  (SERVICE_NAME = orcl))" +
                                     ");User Id = DPVCORE;password=pomazafaP1";
 
                                     connection = new OracleConnection();
@@ -152,7 +151,7 @@ namespace MyProject
 
                                     if (emp.IsAdmin == 1)
                                     {
-                                        AdminWindow wind = new AdminWindow(connection);
+                                        AdminWindow wind = new AdminWindow(connection, emp);
 
                                         wind.Show();
                                     }
@@ -176,7 +175,7 @@ namespace MyProject
                             }
                         }
                         else
-                            MessageBox.Show("Nope", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            MessageBox.Show("You entered incorrect password", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
                 }
                 catch (OracleException ex)

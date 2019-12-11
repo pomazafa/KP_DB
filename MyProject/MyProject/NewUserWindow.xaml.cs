@@ -110,9 +110,18 @@ namespace MyProject
 
                         Close();
                     }
+                    catch(OracleException ex)
+                    {
+                        if(ex.Number == 1)
+                        {
+                            MessageBox.Show("You entered not unique login", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                        else
+                            MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message);
+                        MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
                 else

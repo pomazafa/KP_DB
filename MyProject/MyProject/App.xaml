@@ -14,7 +14,7 @@
             </Setter>-->
             <Setter Property="FontFamily" Value="sans-serif"></Setter>
             <Setter Property="Background" Value="#282E33"></Setter>
-            <!--<Setter Property="Icon" Value="pictures/icon.png"></Setter>-->
+            <Setter Property="Icon" Value="Images/train.png"></Setter>
         </Style>
 
         <Style x:Key="MyLabel" TargetType="{x:Type Label}">

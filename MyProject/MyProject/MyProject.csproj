@@ -82,19 +82,23 @@
     <Compile Include="AdminWindow.xaml.cs">
       <DependentUpon>AdminWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Card.cs" />
     <Compile Include="ChooseStationWindow.xaml.cs">
       <DependentUpon>ChooseStationWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Client.cs" />
     <Compile Include="Controller.cs" />
+    <Compile Include="CreateEmployeeWindow.xaml.cs">
+      <DependentUpon>CreateEmployeeWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CreateTripSelectTrainWindow.xaml.cs">
       <DependentUpon>CreateTripSelectTrainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CreateTripTrainChoice.xaml.cs">
-      <DependentUpon>CreateTripTrainChoice.xaml</DependentUpon>
+    <Compile Include="CreateTripTrainChoiceWindow.xaml.cs">
+      <DependentUpon>CreateTripTrainChoiceWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CreateTripTrainInfo.xaml.cs">
-      <DependentUpon>CreateTripTrainInfo.xaml</DependentUpon>
+    <Compile Include="CreateTripTrainInfoWindow.xaml.cs">
+      <DependentUpon>CreateTripTrainInfoWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="CreateTripWindow.xaml.cs">
       <DependentUpon>CreateTripWindow.xaml</DependentUpon>
@@ -103,10 +107,23 @@
     <Compile Include="EmployeeWindow.xaml.cs">
       <DependentUpon>EmployeeWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="IsAdminChoiceWindow.xaml.cs">
+      <DependentUpon>IsAdminChoiceWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Occupation.cs" />
+    <Compile Include="OccupationWindow.xaml.cs">
+      <DependentUpon>OccupationWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SearchTrainWindow.xaml.cs">
       <DependentUpon>SearchTrainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="SecurePasswordHashing.cs" />
+    <Compile Include="SelectEmployeeUserWindow.xaml.cs">
+      <DependentUpon>SelectEmployeeUserWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SelectOccupationWindow.xaml.cs">
+      <DependentUpon>SelectOccupationWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Station.cs" />
     <Compile Include="Ticket.cs" />
     <Compile Include="Train.cs" />
@@ -123,15 +140,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="CreateEmployeeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CreateTripSelectTrainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="CreateTripTrainChoice.xaml">
+    <Page Include="CreateTripTrainChoiceWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="CreateTripTrainInfo.xaml">
+    <Page Include="CreateTripTrainInfoWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -140,6 +161,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EmployeeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="IsAdminChoiceWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -159,7 +184,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="OccupationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SearchTrainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SelectEmployeeUserWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SelectOccupationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -196,6 +233,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\train.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

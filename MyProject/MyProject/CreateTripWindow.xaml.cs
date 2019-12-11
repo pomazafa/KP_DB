@@ -25,15 +25,17 @@ namespace MyProject
         DateTime dt1;
         DateTime dt2;
         List<TrainStop> stops;
-        public CreateTripWindow(OracleConnection con)
+        Employee employee;
+        public CreateTripWindow(OracleConnection con, Employee emp)
         {
             InitializeComponent();
             connection = con;
             stops = new List<TrainStop>();
             ResSet.ItemsSource = stops;
             ResSet.AutoGenerateColumns = false;
+            employee = emp;
         }
-        public CreateTripWindow(OracleConnection con, List<TrainStop> stops)
+        public CreateTripWindow(OracleConnection con, List<TrainStop> stops, Employee emp)
         {
             InitializeComponent();
             connection = con;
@@ -41,6 +43,7 @@ namespace MyProject
             ResSet.ItemsSource = this.stops;
             ResSet.AutoGenerateColumns = false;
             isSizeCorrect();
+            employee = emp;
         }
         private void Add_Click(object sender, RoutedEventArgs e)
         {
@@ -99,7 +102,7 @@ namespace MyProject
 
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
-            AdminWindow wind = new AdminWindow(connection);
+            AdminWindow wind = new AdminWindow(connection, employee);
             wind.Show();
             Close();
         }
@@ -107,7 +110,7 @@ namespace MyProject
         private void Create_Click(object sender, RoutedEventArgs e)
         {
             stops.Sort(delegate (TrainStop c1, TrainStop c2) { return c1.Arrival_datetime.CompareTo(c2.Arrival_datetime); });
-            CreateTripTrainChoiceWindow wind = new CreateTripTrainChoiceWindow(connection, stops);
+            CreateTripTrainChoiceWindow wind = new CreateTripTrainChoiceWindow(connection, stops, employee);
             wind.Show();
             Close();
         }

@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 D:\!S5\KP\MyProject\MyProject\App.xaml
-2704467157
+111956529069
 
-7-222660310
-14-1424019376
-MainWindow.xaml;NewUserWindow.xaml;
+261084596197
+16289600764
+AdminWindow.xaml;ChooseStationWindow.xaml;CreateTripSelectTrainWindow.xaml;CreateTripTrainChoice.xaml;CreateTripTrainInfo.xaml;CreateTripWindow.xaml;EmployeeWindow.xaml;MainWindow.xaml;NewUserWindow.xaml;SearchTrainWindow.xaml;TrainsStationsWindow.xaml;
 
-True
+False
 

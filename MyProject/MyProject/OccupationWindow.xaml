@@ -1,0 +1,58 @@
+﻿<Window x:Class="MyProject.OccupationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MyProject"
+        mc:Ignorable="d"
+        Title="Occupation Info" MinHeight="430" MinWidth="340" 
+        Style="{StaticResource MyWindow}">
+    <Grid Margin="40, 10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="15"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="15"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Button Name="Existing" Click="Existing_Click"
+                Content="Select existing occupation" 
+                    Style="{DynamicResource MyButton}"
+                    MaxWidth="370"
+                    Grid.Row="1"/>
+        <Grid Grid.Column="0" Grid.Row="2" MaxWidth="400">
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource brushWatermarkBackground}" Style="{StaticResource EntryFieldStyle}" >
+                <TextBlock Margin="5,2" Text="Occupation name" Foreground="{StaticResource brushWatermarkForeground}"
+                       Visibility="{Binding ElementName=name, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                <TextBox Name="name" MaxLength="40" Foreground="{StaticResource brushForegroudTextfield}" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}" />
+            </Grid>
+        </Grid>
+        <Grid Grid.Column="0" Grid.Row="3" MaxWidth="400">
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource brushWatermarkBackground}" Style="{StaticResource EntryFieldStyle}" >
+                <TextBlock Margin="5,2" Text="Cost per hour" Foreground="{StaticResource brushWatermarkForeground}"
+                       Visibility="{Binding ElementName=cost, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                <TextBox Name="cost" MaxLength="6" Foreground="{StaticResource brushForegroudTextfield}" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}" />
+            </Grid>
+        </Grid>
+        <Grid Grid.Column="0" Grid.Row="4" MaxWidth="400">
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource brushWatermarkBackground}" Style="{StaticResource EntryFieldStyle}" >
+                <TextBlock Margin="5,2" Text="Hours per week" Foreground="{StaticResource brushWatermarkForeground}"
+                       Visibility="{Binding ElementName=Hours, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                <TextBox Name="Hours" MaxLength="2" Foreground="{StaticResource brushForegroudTextfield}" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}" />
+            </Grid>
+        </Grid>
+        <Button      MinWidth="70" Name="Create" Click="Create_Click" 
+                     Content="Create Occupation"
+                    Style="{DynamicResource MyButton}"
+                    MaxWidth="370"
+                    Grid.Row="5"/>
+        <Button Name="back" Click="Back_Click"
+                Content="Back" 
+                    Style="{DynamicResource MyButton}"
+                    MaxWidth="370"
+                    Grid.Row="6"/>
+    </Grid>
+</Window>

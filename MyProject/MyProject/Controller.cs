@@ -103,7 +103,7 @@ namespace MyProject
                 try
                 {
                     OracleCommand cmdIns = new OracleCommand();
-                    MessageBox.Show(ts.Arrival_datetime.ToString());
+                    //MessageBox.Show(ts.Arrival_datetime.ToString());
                     cmdIns.CommandText = "insert into system.train_stop(arrival_time, departure_time, station_id, trip_id) values (TO_DATE('" + ts.Arrival_datetime.ToString() + "', 'DD-MM-YYYY HH24:MI:SS'), TO_DATE('" + ts.Departure_datetime.ToString() + "', 'DD-MM-YYYY HH24:MI:SS'), " + ts.Station.Station_ID + ", " + trip.Trip_ID + ")";
 
                     cmdIns.Connection = connection;

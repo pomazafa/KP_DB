@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MyProject"
         mc:Ignorable="d"
-        Title="ChooseStationWindow"  Style="{StaticResource MyWindow}" 
+        Title="Choose Station"  Style="{StaticResource MyWindow}" 
         MinHeight="400" MinWidth="800" Loaded="Window_Loaded">
     <Grid Margin="20">
         <Grid.RowDefinitions>
@@ -27,8 +27,8 @@
             </DataGrid.RowHeaderTemplate>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Station name" Binding="{Binding Name}" Width="*"></DataGridTextColumn>
-                <DataGridTextColumn Header="Town" Binding="{Binding Address.TOWN}" Width="auto"></DataGridTextColumn>
-                <DataGridTextColumn Header="Street" Binding="{Binding Address.STREET}" Width="auto"></DataGridTextColumn>
+                <DataGridTextColumn Header="Town" Binding="{Binding Address.TOWN}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Street" Binding="{Binding Address.STREET}" Width="*"></DataGridTextColumn>
                 <DataGridTextColumn Header="House" Binding="{Binding Address.HOUSE}" Width="auto"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>

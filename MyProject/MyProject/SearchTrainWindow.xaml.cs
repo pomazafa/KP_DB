@@ -126,7 +126,7 @@ namespace MyProject
                     MessageBox.Show("Fill in the fields", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 else
                 {
-                    if (dt > DateTime.Now)
+                    if (dt.Date >= DateTime.Now.Date)
                     {
                         OracleCommand cmd = new OracleCommand();
 
@@ -164,9 +164,19 @@ namespace MyProject
                                 {
                                     if (dr2.GetInt32(0).Equals(id))
                                     {
+                                        OracleCommand cmd3 = new OracleCommand();
+
+                                        cmd3.CommandText = "select count(*) from system.ticket where trip_id = " + id;
+
+                                        cmd3.Connection = connection;
+
+                                        cmd3.CommandType = System.Data.CommandType.Text;
+                                        //MessageBox.Show(cmd3.ExecuteScalar().ToString());
+                                        int countSeats = int.Parse(cmd3.ExecuteScalar().ToString());
+
                                         Station st1 = new Station(dr.GetInt32(8), dr.GetString(9), new Address());
                                         Station st2 = new Station(dr.GetInt32(11), dr.GetString(12), new Address());
-                                        Train t = new Train(dr.GetInt32(1), dr.GetString(5), dr.GetInt32(6), dr.GetInt32(7));
+                                        Train t = new Train(dr.GetInt32(1), dr.GetString(5), dr.GetInt32(6) - countSeats, dr.GetInt32(7));
                                         Trip trip = new Trip(id, st1, st2, t);
                                         ResSet.Items.Add(trip);
                                         break;
@@ -292,27 +302,36 @@ namespace MyProject
         {
             if (ResSet.SelectedItem != null)
             {
-                try
+                if (((Trip)ResSet.SelectedItem).Train.COUNTSEATS > 0)
                 {
-                    OracleCommand cmd = new OracleCommand();
+                    try
+                    {
+                        OracleCommand cmd = new OracleCommand();
 
-                    cmd.CommandText = "insert into system.ticket(date_of_trip, client_id, trip_id) values (TO_DATE('" + date + "', 'DD-MM-YYYY HH24:MI'), " + cl.Client_ID + ", " + ((Trip)ResSet.SelectedItem).Trip_ID + ")";
+                        cmd.CommandText = "insert into system.ticket(date_of_trip, client_id, trip_id) values (TO_DATE('" + date + "', 'DD-MM-YYYY HH24:MI'), " + cl.Client_ID + ", " + ((Trip)ResSet.SelectedItem).Trip_ID + ")";
 
-                    cmd.Connection = connection;
+                        cmd.Connection = connection;
 
-                    cmd.CommandType = System.Data.CommandType.Text;
+                        cmd.CommandType = System.Data.CommandType.Text;
 
-                    int c = cmd.ExecuteNonQuery();
+                        int c = cmd.ExecuteNonQuery();
 
-                    MessageBox.Show("Ticket is successfully booked", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                        MessageBox.Show("Ticket is successfully booked", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                        Search_Click(sender, null);
+                    }
+                    catch (OracleException ex)
+                    {
+                        MessageBox.Show("Sorry. There is something wrong with database", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
-                catch (OracleException ex)
+                else
                 {
-                    MessageBox.Show("Sorry. There is something wrong with database", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Sorry, there is no place for you", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }

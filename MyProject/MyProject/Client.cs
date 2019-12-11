@@ -26,7 +26,12 @@ namespace MyProject
             PATRONIMIC = patr.Trim();
         }
 
-
+        public Client(string log, string last, string first)
+        {
+            LOGIN = log;
+            LASTNAME = last;
+            FIRSTNAME = first;
+        }
         [Key]
         public int Client_ID { get; set; }
 

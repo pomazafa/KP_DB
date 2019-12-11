@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MyProject"
         mc:Ignorable="d"
-        Title="EmployeeWindow" Style="{StaticResource MyWindow}" 
+        Title="Employee Window" Style="{StaticResource MyWindow}" 
         MinHeight="400" MinWidth="800" Loaded="Window_Loaded">
     <Grid Margin="20">
         <Grid.RowDefinitions>
@@ -32,11 +32,11 @@
                 Style="{DynamicResource MyButton}" Grid.Column="0"
                 Grid.Row="1"></Button>
         
-        <Button Content="Export database" Name="Export" Click="ExportXML_Click"
+        <Button Content="Export clients" Name="Export" Click="ExportXML_Click"
                 Style="{DynamicResource MyButton}" Grid.Column="1"
                 Grid.Row="1"></Button>
 
-        <Button Content="Import Clients" Name="Import" Click="Import_Click"
+        <Button Content="Import clients" Name="Import" Click="Import_Click"
                 Style="{DynamicResource MyButton}" Grid.Column="2"
                 Grid.Row="1"></Button>
 

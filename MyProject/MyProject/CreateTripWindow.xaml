@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MyProject"
         mc:Ignorable="d"
-        Title="CreateTripWindow" Style="{StaticResource MyWindow}" 
+        Title="Create Trip Window" Style="{StaticResource MyWindow}" 
         MinHeight="400" MinWidth="800"  Name="CreateTrip">
     <!--Loaded="Window_Loaded"-->
     <Grid Margin="20">

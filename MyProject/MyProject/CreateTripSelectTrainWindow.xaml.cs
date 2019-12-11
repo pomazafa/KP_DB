@@ -22,11 +22,13 @@ namespace MyProject
     {
         OracleConnection connection;
         List<TrainStop> stops;
-        public CreateTripSelectTrainWindow(OracleConnection con, List<TrainStop> stops)
+        Employee employee;
+        public CreateTripSelectTrainWindow(OracleConnection con, List<TrainStop> stops, Employee emp)
         {
             InitializeComponent();
             connection = con;
             this.stops = stops;
+            employee = emp;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -62,7 +64,7 @@ namespace MyProject
             {
                 if (Controller.InsertAll(((Train)ResSet.SelectedItem), stops, connection))
                 {
-                    AdminWindow wind = new AdminWindow(connection);
+                    AdminWindow wind = new AdminWindow(connection, employee);
                     wind.Show();
                     Close();
                 }
@@ -71,7 +73,7 @@ namespace MyProject
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {
-            CreateTripTrainChoiceWindow wind = new CreateTripTrainChoiceWindow(connection, stops);
+            CreateTripTrainChoiceWindow wind = new CreateTripTrainChoiceWindow(connection, stops, employee);
             wind.Show();
             Close();
         }
